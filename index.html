@@ -390,12 +390,15 @@
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.9);
       transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
-      mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23grain)'/%3E%3C/svg%3E");
-      background-size: 140px 140px;
+      /* soft-light preserva a suavidade do brilho (overlay endurecia
+         demais e achatava o degradê); grão fino e dessaturado, como filme. */
+      mix-blend-mode: soft-light;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23grain)'/%3E%3C/svg%3E");
+      background-size: 110px 110px;
       background-repeat: repeat;
-      -webkit-mask-image: radial-gradient(ellipse at center, #000 0%, #000 32%, rgba(0,0,0,0.35) 56%, transparent 82%);
-      mask-image: radial-gradient(ellipse at center, #000 0%, #000 32%, rgba(0,0,0,0.35) 56%, transparent 82%);
+      /* máscara seguindo a mesma queda suave do brilho — sem borda definida */
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 0%, rgba(0,0,0,0.6) 42%, rgba(0,0,0,0.18) 66%, transparent 86%);
+      mask-image: radial-gradient(ellipse at center, #000 0%, rgba(0,0,0,0.6) 42%, rgba(0,0,0,0.18) 66%, transparent 86%);
     }
     .btn-reel:hover::after,
     .btn-reel:focus-visible::after {
