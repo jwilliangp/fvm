@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flávio Costalonga — Filmmaker, fotógrafo e artista visual</title>
+  <meta name="description" content="Portfólio audiovisual de Flávio Costalonga — filmmaker, fotógrafo e artista visual. Filmes, fotos e conceitos. Baseado em Valinhos, SP.">
+  <meta name="theme-color" content="#070707">
+  <meta name="color-scheme" content="dark">
+
+  <!-- Open Graph (self-contained, sem dependências externas) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Flávio Costalonga — Filmmaker, fotógrafo e artista visual">
+  <meta property="og:description" content="Portfólio audiovisual de alto padrão. Filmes, fotos e conceitos.">
+
+  <style>
+    /* =================================================================
+       DESIGN TOKENS
+       Dark Mode First · Alto contraste · Estética minimalista editorial
+
+       PRINCÍPIO TIPOGRÁFICO (ref.: hickduarte / dimitrow / nixonfreire):
+       a mídia domina; o texto é discreto. Uma única família, um único
+       peso e um único tracking são usados em TODO o site — a hierarquia
+       é construída APENAS pelo tamanho. Nada de fontes display pesadas
+       ou monoespaçadas concorrendo com as fotos e vídeos.
+       ================================================================= */
+    :root {
+      /* --- Cores: Paleta Base --- */
+      --noir: #070707;          /* Background (Noir Black) */
+      --white: #FFFFFF;         /* Texto Principal (Pure White / alto contraste) */
+      --grey: #8a8a8a;          /* Texto Secundário / UI Elements */
+      --line: #333333;          /* Linhas de input / divisórias */
+
+      /* --- Cor de accent (única, usada com parcimônia) --- */
+      --red: #FE0000;           /* Impacto / estado ativo / seleção */
+
+      /* --- Tipografia ---
+         UMA única família neutra (grotesca), com fallback de sistema para
+         garantir ZERO dependências externas / requisições de rede.
+         Sem display, sem mono: tudo compartilha a mesma estrutura. */
+      --font: 'Helvetica Neue', Helvetica, 'Inter', Arial, system-ui, 'Segoe UI', sans-serif;
+
+      /* Peso e espaçamento ÚNICOS — definidos uma vez e herdados.
+         Só o tamanho muda entre os elementos. */
+      --fw: 400;
+      --tracking: 0.04em;
+
+      /* --- Escala tipográfica (fluida) · pequena e contida ---
+         A única variável de hierarquia. Mídia >> texto. */
+      --fs-display: clamp(1.75rem, 4vw, 3rem);     /* maior texto do site (títulos de projeto / SOBRE) */
+      --fs-lead:    clamp(0.95rem, 1.2vw, 1.1rem);  /* sinopse / leads */
+      --fs-title:   clamp(1.05rem, 1.8vw, 1.4rem);  /* título do card (hover) / locação */
+      --fs-body:    clamp(0.9rem, 0.35vw + 0.8rem, 1rem);
+      --fs-small:   0.75rem;     /* 12px — labels / nav / filtros */
+      --fs-micro:   0.6875rem;   /* 11px — micro-legendas */
+
+      /* --- Espaçamento: margens generosas / respiros gigantes --- */
+      --space-section: clamp(120px, 18vw, 160px);
+      --pad-x: clamp(20px, 6vw, 120px);
+      --gap-grid: clamp(12px, 1.6vw, 24px);
+      --maxw: 1680px;
+      --header-h: 76px;
+
+      /* --- Regra binária de border-radius --- */
+      --radius-flat: 0px;       /* fotos, vídeos, blocos */
+      --radius-pill: 999px;     /* botões cápsula / tags */
+
+      /* --- Movimento --- */
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+      --dur: 0.45s;
+    }
+
+    /* =================================================================
+       RESET
+       ================================================================= */
+    *, *::before, *::after { box-sizing: border-box; }
+    * { margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      background: var(--noir);
+      color: var(--white);
+      /* Família, peso e tracking definidos UMA vez e herdados por tudo.
+         A hierarquia tipográfica vem só do tamanho. */
+      font-family: var(--font);
+      font-size: var(--fs-body);
+      font-weight: var(--fw);
+      letter-spacing: var(--tracking);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    img, video, svg { display: block; max-width: 100%; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--dur) var(--ease), opacity var(--dur) var(--ease);
+    }
+
+    button {
+      font: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    ul { list-style: none; }
+
+    /* Mesmo peso para todos os títulos — sem negrito concorrente. */
+    h1, h2, h3 { font-weight: var(--fw); line-height: 1.1; }
+
+    ::selection { background: var(--red); color: var(--white); }
+
+    /* =================================================================
+       ACESSIBILIDADE: foco visível + skip link + sr-only
+       ================================================================= */
+    :focus-visible {
+      outline: 2px solid var(--red);
+      outline-offset: 3px;
+    }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 8px; left: 8px;
+      z-index: 200;
+      background: var(--white);
+      color: var(--noir);
+      padding: 12px 20px;
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+    }
+    .skip-link {
+      transform: translateY(-150%);
+      transition: transform var(--dur) var(--ease);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    /* =================================================================
+       LAYOUT HELPERS
+       ================================================================= */
+    .container {
+      width: 100%;
+      max-width: var(--maxw);
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* Alvo de scroll compensando o header fixo */
+    [id] { scroll-margin-top: calc(var(--header-h) + 24px); }
+
+    /* =================================================================
+       HEADER (Navegação fixa, transparente que se adapta ao rolar)
+       ================================================================= */
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 100;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+    }
+    .site-header.is-scrolled {
+      background: rgba(7, 7, 7, 0.82);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-bottom-color: var(--line);
+    }
+
+    .site-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: var(--header-h);
+      max-width: var(--maxw);
+      margin-inline: auto;
+      padding-inline: var(--pad-x);
+    }
+
+    /* Wordmark discreto — mesma fonte/peso/tracking, apenas um tamanho acima da nav. */
+    .logo {
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      line-height: 1;
+      white-space: nowrap;
+      color: var(--white);
+    }
+    .logo:hover { color: var(--grey); }
+
+    /* Navegação principal */
+    .nav__list {
+      display: flex;
+      align-items: center;
+      gap: clamp(20px, 2.4vw, 44px);
+    }
+    .nav__link {
+      position: relative;
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 8px 2px;
+    }
+    .nav__link::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 100%; height: 1px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--dur) var(--ease);
+    }
+    .nav__link:hover, .nav__link:focus-visible { color: var(--white); }
+    .nav__link:hover::after, .nav__link:focus-visible::after { transform: scaleX(1); }
+
+    /* Botão hambúrguer (mobile) */
+    .nav-toggle {
+      display: none;
+      width: 48px; height: 48px;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+    }
+    .nav-toggle__bars { position: relative; width: 26px; height: 14px; }
+    .nav-toggle__bars span {
+      position: absolute; left: 0;
+      width: 100%; height: 2px;
+      background: var(--white);
+      transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease), top var(--dur) var(--ease);
+    }
+    .nav-toggle__bars span:nth-child(1) { top: 0; }
+    .nav-toggle__bars span:nth-child(2) { top: 6px; }
+    .nav-toggle__bars span:nth-child(3) { top: 12px; }
+    .site-header.nav-open .nav-toggle__bars span:nth-child(1) { top: 6px; transform: rotate(45deg); }
+    .site-header.nav-open .nav-toggle__bars span:nth-child(2) { opacity: 0; }
+    .site-header.nav-open .nav-toggle__bars span:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+
+    /* =================================================================
+       HERO (Full-screen / 100vh, vídeo em loop + PLAY REEL + seta)
+       ================================================================= */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* Container preparado para receber o vídeo (showreel autoplay/loop/mudo).
+       Enquanto não há mídia, um fundo cinematográfico animado em CSS
+       sustenta a atmosfera noir. */
+    .hero__media {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(120% 90% at 22% 18%, #14223f 0%, rgba(7,16,39,0.65) 38%, rgba(7,7,7,0) 70%),
+        radial-gradient(120% 90% at 82% 78%, #2a0d0d 0%, rgba(20,4,4,0.55) 36%, rgba(7,7,7,0) 70%),
+        var(--noir);
+      background-size: 200% 200%, 200% 200%, 100% 100%;
+      animation: heroDrift 28s var(--ease) infinite alternate;
+    }
+    .hero__video {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    @keyframes heroDrift {
+      0%   { background-position: 0% 0%, 100% 100%, 0 0; }
+      100% { background-position: 100% 50%, 0% 50%, 0 0; }
+    }
+
+    /* Overlay: vinheta + grão de filme para profundidade (sem sombras) */
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(120% 120% at 50% 45%, rgba(7,7,7,0) 40%, rgba(7,7,7,0.55) 78%, rgba(7,7,7,0.9) 100%);
+    }
+    .hero__overlay::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .hero__content {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: var(--pad-x);
+    }
+
+    /* Botão PLAY REEL — cápsula discreta, mesma fonte/peso/tracking. */
+    .btn-reel {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      min-width: 44px;
+      padding: 0 36px;
+      border: 1px solid var(--white);
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--white);
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+    }
+    .btn-reel:hover, .btn-reel:focus-visible {
+      background: var(--white);
+      color: var(--noir);
+    }
+
+    /* Seta de scroll para o portfólio */
+    .hero__scroll {
+      position: absolute;
+      left: 50%;
+      bottom: clamp(20px, 4vh, 44px);
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px; height: 48px;
+      color: var(--white);
+    }
+    .hero__scroll svg { width: 26px; height: 26px; animation: bob 2.4s ease-in-out infinite; }
+    .hero__scroll:hover { color: var(--grey); }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* =================================================================
+       PORTFÓLIO (Grid rigoroso · cards invisíveis · hover escurece)
+       ================================================================= */
+    .portfolio { padding-block: var(--space-section); }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 8px;
+      margin-bottom: clamp(36px, 5vw, 64px);
+    }
+    .filter {
+      min-height: 44px;
+      padding: 10px 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--grey);
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+    }
+    .filter:hover, .filter:focus-visible {
+      color: var(--white);
+      border-color: var(--white);
+    }
+    .filter.is-active,
+    .filter.is-active:hover,
+    .filter.is-active:focus-visible {
+      color: var(--red);
+      background: transparent;
+      border-color: var(--red);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--gap-grid);
+    }
+
+    .grid__item { min-width: 0; }
+    .grid__item[hidden] { display: none; }
+
+    /* Card de projeto: puramente a mídia. Sem moldura, fundo ou sombra. */
+    .card {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      background: var(--noir);
+      border-radius: var(--radius-flat);
+    }
+    .card__media {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease);
+    }
+    /* Vinheta sutil nas bordas (gradiente, não sombra) */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(7,7,7,0.55) 100%);
+    }
+
+    /* Hover/focus: leve escurecimento + título e categoria centralizados */
+    .card__overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+      padding: 16px;
+      background: rgba(7, 7, 7, 0.55);
+      opacity: 0;
+      transition: opacity var(--dur) var(--ease);
+    }
+    .card:hover .card__media,
+    .card:focus-visible .card__media { transform: scale(1.04); }
+    .card:hover .card__overlay,
+    .card:focus-visible .card__overlay { opacity: 1; }
+
+    /* Legenda discreta sobre a mídia — só o tamanho a distingue da categoria. */
+    .card__title {
+      font-size: var(--fs-title);
+      text-transform: uppercase;
+      line-height: 1.1;
+      color: var(--white);
+    }
+    .card__cat {
+      font-size: var(--fs-micro);
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    /* =================================================================
+       MODAL / VISUALIZAÇÃO DE PROJETO INDIVIDUAL (full-screen)
+       ================================================================= */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 150;
+      display: none;
+      background: var(--noir);
+    }
+    .modal.is-open { display: block; }
+    .modal[hidden] { display: none; }
+
+    .modal__scroll {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .modal__close {
+      position: fixed;
+      top: clamp(16px, 3vw, 32px);
+      right: clamp(16px, 4vw, 48px);
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px; height: 48px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      background: rgba(7, 7, 7, 0.6);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      color: var(--white);
+      transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .modal__close:hover, .modal__close:focus-visible {
+      border-color: var(--white);
+      transform: rotate(90deg);
+    }
+    .modal__close svg { width: 18px; height: 18px; }
+
+    /* Mídia principal em grande destaque no topo — a estrela da página. */
+    .modal__media {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 86vh;
+      object-fit: cover;
+      background: var(--noir);
+    }
+
+    .modal__body {
+      max-width: 1200px;
+      margin-inline: auto;
+      padding: clamp(40px, 7vw, 96px) var(--pad-x) var(--space-section);
+    }
+
+    /* Cabeçalho do projeto: título + segmento. Tamanho é a única hierarquia. */
+    .project__title {
+      font-size: var(--fs-display);
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+    .project__seg {
+      display: inline-block;
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      color: var(--grey);
+      vertical-align: middle;
+    }
+
+    /* Sinopse: discreta, entrelinhas generosas. */
+    .project__synopsis {
+      max-width: 60ch;
+      margin-top: clamp(28px, 4vw, 44px);
+      font-size: var(--fs-lead);
+      line-height: 1.7;
+      color: var(--grey);
+    }
+
+    /* Ficha técnica (Credits): lista rigorosa em 2 colunas */
+    .credits {
+      margin-top: clamp(48px, 7vw, 88px);
+      border-top: 1px solid var(--line);
+    }
+    .credits__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .credits__label {
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    .credits__value {
+      font-size: var(--fs-small);
+      color: var(--white);
+      text-align: right;
+    }
+
+    /* =================================================================
+       INFO / SOBRE (Duas colunas 50/50, foco em tipografia)
+       ================================================================= */
+    .info { padding-block: var(--space-section); }
+    .info__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(48px, 7vw, 96px);
+    }
+
+    .info__heading {
+      font-size: var(--fs-display);
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: clamp(28px, 4vw, 44px);
+    }
+    .info__bio p { max-width: 52ch; color: var(--grey); }
+    .info__bio p + p { margin-top: 1.4em; }
+    /* Ênfase por COR (alto contraste), não por peso — mantém uniformidade. */
+    .info__bio strong { color: var(--white); font-weight: var(--fw); }
+
+    .info__contact { align-self: end; }
+    .info__label {
+      font-size: var(--fs-small);
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 12px;
+    }
+    .info__location {
+      font-size: var(--fs-title);
+      color: var(--white);
+      margin-bottom: clamp(36px, 5vw, 56px);
+    }
+
+    .contact-list li + li { margin-top: 14px; }
+    .contact-link {
+      display: inline-block;
+      font-size: var(--fs-body);
+      color: var(--white);
+      padding: 6px 0;
+      border-bottom: 1px solid transparent;
+    }
+    .contact-link:hover, .contact-link:focus-visible {
+      color: var(--white);
+      border-bottom-color: var(--white);
+    }
+
+    .social {
+      margin-top: clamp(36px, 5vw, 56px);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      font-size: var(--fs-micro);
+      color: var(--grey);
+    }
+    .social a {
+      color: var(--white);
+      padding: 10px 4px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .social a:hover, .social a:focus-visible { color: var(--red); }
+    .social .sep { color: var(--line); }
+
+    /* =================================================================
+       FOOTER (Linha divisória fina · discreto)
+       ================================================================= */
+    .site-footer { border-top: 1px solid var(--line); }
+    .site-footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 88px;
+      padding-block: 24px;
+    }
+    .site-footer p {
+      font-size: var(--fs-micro);
+      color: var(--grey);
+      text-align: center;
+    }
+
+    /* =================================================================
+       ANIMAÇÕES DE REVELAÇÃO (sutis)
+       ================================================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    /* =================================================================
+       SKINS DE MÍDIA (placeholders cinematográficos — substituir por
+       fotos/vídeos reais). <img> transparente + atmosfera via CSS.
+       ================================================================= */
+    .skin-1 { background: radial-gradient(120% 100% at 28% 22%, #16233f 0%, #0a1228 46%, #060708 100%); }
+    .skin-2 { background: radial-gradient(120% 100% at 72% 28%, rgba(198,164,98,0.55) 0%, #2a2113 30%, #0c0a06 100%); }
+    .skin-3 { background: radial-gradient(120% 100% at 68% 32%, #3a0606 0%, #160303 48%, #070707 100%); }
+    .skin-4 { background: radial-gradient(120% 100% at 30% 28%, rgba(244,166,163,0.45) 0%, #4a2e2c 30%, #130b0a 100%); }
+    .skin-5 { background: linear-gradient(155deg, #1b1e22 0%, #0c0e10 58%, #070707 100%); }
+    .skin-6 { background: radial-gradient(130% 110% at 80% 20%, #1c2c4d 0%, #0b1426 44%, #070707 100%); }
+    .skin-7 { background: linear-gradient(135deg, rgba(198,164,98,0.4) 0%, #14223f 46%, #070707 100%); }
+    .skin-8 { background: radial-gradient(120% 100% at 50% 18%, #101a33 0%, #090d18 50%, #070707 100%); }
+    .skin-9 { background: linear-gradient(150deg, #2a0d0d 0%, #15100f 50%, #070707 100%); }
+    .skin-reel { background: radial-gradient(120% 120% at 50% 30%, #1a2747 0%, #0a1024 40%, #060708 100%); }
+
+    /* =================================================================
+       RESPONSIVO — Mobile-first → Tablet → Desktop
+       ================================================================= */
+
+    /* Tablet (>= 768px) */
+    @media (min-width: 768px) {
+      :root { --header-h: 84px; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .info__grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Desktop (>= 1100px) */
+    @media (min-width: 1100px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Mobile (< 768px): menu colapsado + ajustes de toque */
+    @media (max-width: 767.98px) {
+      .nav-toggle { display: inline-flex; }
+      .nav {
+        position: fixed;
+        inset: var(--header-h) 0 auto 0;
+        background: rgba(7, 7, 7, 0.97);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+        transform: translateY(-120%);
+        transition: transform var(--dur) var(--ease);
+        visibility: hidden;
+      }
+      .site-header.nav-open .nav { transform: translateY(0); visibility: visible; }
+      .nav__list {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 8px var(--pad-x) 24px;
+      }
+      .nav__link {
+        display: block;
+        padding: 16px 0;
+        font-size: var(--fs-body);
+        border-bottom: 1px solid var(--line);
+      }
+      .nav__link::after { display: none; }
+      .credits__row { grid-template-columns: 1fr; gap: 4px; }
+      .credits__value { text-align: left; }
+    }
+
+    /* =================================================================
+       PREFERÊNCIAS DE MOVIMENTO REDUZIDO
+       ================================================================= */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#portfolio">Pular para o conteúdo</a>
+
+  <!-- ============================== HEADER ============================== -->
+  <header class="site-header" id="top">
+    <div class="site-header__inner">
+      <a href="#top" class="logo" aria-label="Flávio Costalonga — voltar ao início">FLÁVIO COSTALONGA</a>
+
+      <nav class="nav" id="primary-nav" aria-label="Navegação principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#portfolio" data-filter="filmes">FILMES</a></li>
+          <li><a class="nav__link" href="#portfolio" data-filter="fotos">FOTOS</a></li>
+          <li><a class="nav__link" href="#portfolio" data-filter="conceitos">CONCEITOS</a></li>
+          <li><a class="nav__link" href="#info">INFO</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" type="button" aria-controls="primary-nav" aria-expanded="false" aria-label="Abrir menu de navegação">
+        <span class="nav-toggle__bars" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================== HERO ============================== -->
+    <section class="hero" id="hero" aria-label="Showreel">
+      <h1 class="sr-only">Flávio Costalonga — Filmmaker, fotógrafo e artista visual</h1>
+
+      <!-- Container preparado para o vídeo em loop (showreel), autoplay e sem som.
+           Adicione a fonte do reel dentro do <video> abaixo. -->
+      <div class="hero__media" role="img" aria-label="Vídeo de apresentação (showreel) em fundo cinematográfico">
+        <video class="hero__video" autoplay muted loop playsinline aria-hidden="true">
+          <!-- <source src="showreel.mp4" type="video/mp4"> -->
+        </video>
+      </div>
+      <div class="hero__overlay" aria-hidden="true"></div>
+
+      <div class="hero__content">
+        <button class="btn-reel" type="button" data-reel aria-haspopup="dialog">[ PLAY REEL ]</button>
+      </div>
+
+      <a class="hero__scroll" href="#portfolio" aria-label="Rolar para o portfólio">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 4v15M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+        </svg>
+      </a>
+    </section>
+
+    <!-- ============================== PORTFÓLIO ============================== -->
+    <section class="portfolio" id="portfolio" aria-labelledby="portfolio-heading">
+      <div class="container">
+        <h2 id="portfolio-heading" class="sr-only">Portfólio</h2>
+
+        <div class="filters reveal" role="group" aria-label="Filtrar projetos por categoria">
+          <button class="filter is-active" type="button" data-filter="todos" aria-pressed="true">TODOS</button>
+          <button class="filter" type="button" data-filter="filmes" aria-pressed="false">FILMES</button>
+          <button class="filter" type="button" data-filter="fotos" aria-pressed="false">FOTOS</button>
+          <button class="filter" type="button" data-filter="conceitos" aria-pressed="false">CONCEITOS</button>
+        </div>
+
+        <ul class="grid" id="grid">
+          <!-- FILMES -->
+          <li class="grid__item reveal" data-category="filmes">
+            <button class="card" type="button" data-project="0" aria-haspopup="dialog">
+              <img class="card__media skin-1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Penumbra — fotograma de filme, categoria Filme" loading="lazy" width="1200" height="800">
+              <span class="card__overlay" aria-hidden="true">
+                <span class="card__title">Penumbra</span>
+                <span class="card__cat">[ Filme ]</span>
+              </span>
+            </button>
+          </li>
+          <li class="grid__item reveal" data-category="filmes">
+            <button class="card" type="button" data-project="1" aria-haspopup="dialog">
+              <img class="card__media skin-3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Maré Alta — fotograma de filme, categoria Filme" loading="lazy" width="1200" height="800">
+              <span class="card__overlay" aria-hidden="true">
+                <span class="card__title">Maré Alta</span>
+                <span class="card__cat">[ Filme ]</span>
+              </span>
+            </button>
+          </li>
+          <li class="grid__item reveal" data-category="filmes">
+            <button class="card" type="button" data-project="2" aria-haspopup="dialog">
+              <img class="card__media skin-2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Cidade Cinza — fotograma de filme, categoria Filme" loading="lazy" width="1200" height="800">
+              <span class="card__overlay" aria-hidden="true">
+                <span class="card__title">Cidade Cinza</span>
+                <span class="card__cat">[ Filme ]</span>
+              </span>
+            </button>
+          </li>
+
+          <!-- FOTOS -->
+          <li class="grid__item reveal" data-category="fotos">
+            <button class="card" type="button" data-project="3" aria-haspopup="dialog">
+              <img class="card__media skin-4" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Retratos do Vale — ensaio fotográfico, categoria Foto" loading="lazy" width="1200" height="800">
+              <span class="card__overlay" aria-hidden="true">
+                <span class="card__title">Retratos do Vale</span>
+                <span class="card__cat">[ Foto ]</span>
+              </span>
+            </button>
+          </li>
+          <li class="grid__item reveal" data-category="fotos">
+            <button class="card" type="button" data-project="4" aria-haspopup="dialog">
+              <img class="card__media skin-5" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Luz Natural — ensaio fotográfico, categoria Foto" loading="lazy" width="1200" height="800">
+              <span class="card__overlay" aria-hidden="true">
+                <span class="card__title">Luz Natural</span>
+                <span class="card__cat">[ Foto ]</span>
+              </span>
+            </button>
+          </li>
+          <li class="grid__item reveal" data-category="fotos">
+            <button class="card" type="button" data-project="5" aria-haspopup="dialog">
+              <img class="card__media skin-6" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Silêncio Urbano — ensaio fotográfico, categoria Foto" loading="lazy" width="1200" height="800">
+              <span class="card__overlay" aria-hidden="true">
+                <span class="card__title">Silêncio Urbano</span>
+                <span class="card__cat">[ Foto ]</span>
+              </span>
+            </button>
+          </li>
+
+          <!-- CONCEITOS -->
+          <li class="grid__item reveal" data-category="conceitos">
+            <button class="card" type="button" data-project="6" aria-haspopup="dialog">
+              <img class="card__media skin-7" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Arquitetura da Luz — visualização arquitetônica 3D, categoria Conceito" loading="lazy" width="1200" height="800">
+              <span class="card__overlay" aria-hidden="true">
+                <span class="card__title">Arquitetura da Luz</span>
+                <span class="card__cat">[ Conceito ]</span>
+              </span>
+            </button>
+          </li>
+          <li class="grid__item reveal" data-category="conceitos">
+            <button class="card" type="button" data-project="7" aria-haspopup="dialog">
+              <img class="card__media skin-8" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Espaços Vazios — visualização arquitetônica 3D, categoria Conceito" loading="lazy" width="1200" height="800">
+              <span class="card__overlay" aria-hidden="true">
+                <span class="card__title">Espaços Vazios</span>
+                <span class="card__cat">[ Conceito ]</span>
+              </span>
+            </button>
+          </li>
+          <li class="grid__item reveal" data-category="conceitos">
+            <button class="card" type="button" data-project="8" aria-haspopup="dialog">
+              <img class="card__media skin-9" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Concreto e Vidro — visualização arquitetônica 3D, categoria Conceito" loading="lazy" width="1200" height="800">
+              <span class="card__overlay" aria-hidden="true">
+                <span class="card__title">Concreto e Vidro</span>
+                <span class="card__cat">[ Conceito ]</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================== INFO / SOBRE ============================== -->
+    <section class="info" id="info" aria-labelledby="info-heading">
+      <div class="container info__grid">
+        <div class="info__bio reveal">
+          <h2 id="info-heading" class="info__heading">SOBRE</h2>
+          <p><strong>Flávio Costalonga — Filmmaker, fotógrafo e artista visual.</strong></p>
+          <p>Espaço reservado para descrever a abordagem técnica e estética.</p>
+        </div>
+
+        <div class="info__contact reveal">
+          <p class="info__label">Baseado em</p>
+          <p class="info__location">Valinhos, SP.</p>
+
+          <p class="info__label">Contato</p>
+          <ul class="contact-list">
+            <li><a class="contact-link" href="mailto:contato@flaviocostalonga.com">E-mail comercial</a></li>
+          </ul>
+
+          <div class="social">
+            <a href="https://instagram.com/" target="_blank" rel="noopener noreferrer">[ INSTAGRAM ]</a>
+            <span class="sep" aria-hidden="true">/</span>
+            <a href="https://vimeo.com/" target="_blank" rel="noopener noreferrer">[ VIMEO ]</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© 2026 Flávio Costalonga. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ============================== MODAL (Projeto individual) ============================== -->
+  <div class="modal" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal__scroll">
+      <button class="modal__close" type="button" data-close aria-label="Fechar projeto">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/>
+        </svg>
+      </button>
+
+      <img class="modal__media skin-1" id="modal-media" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="" width="1600" height="900">
+
+      <div class="modal__body">
+        <header>
+          <h2 class="project__title" id="modal-title">
+            <span id="modal-name">Nome do Projeto</span>
+            <span class="project__seg" id="modal-seg">— [ Filme ]</span>
+          </h2>
+        </header>
+
+        <p class="project__synopsis" id="modal-synopsis"></p>
+
+        <dl class="credits" aria-label="Ficha técnica">
+          <div class="credits__row">
+            <dt class="credits__label">Direção</dt>
+            <dd class="credits__value">[ Nome ]</dd>
+          </div>
+          <div class="credits__row">
+            <dt class="credits__label">Direção de Fotografia</dt>
+            <dd class="credits__value">[ Nome ]</dd>
+          </div>
+          <div class="credits__row">
+            <dt class="credits__label">Color Grading</dt>
+            <dd class="credits__value">[ Nome ]</dd>
+          </div>
+          <div class="credits__row">
+            <dt class="credits__label">Sound Design</dt>
+            <dd class="credits__value">[ Nome ]</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---------------------------------------------------------------
+         Dados dos projetos (placeholders — substituir por conteúdo real)
+         --------------------------------------------------------------- */
+      var projects = [
+        { name: 'Penumbra',           seg: 'Filme',    skin: 'skin-1', synopsis: 'Sinopse do projeto. Bloco curto que apresenta o conceito da obra, o processo de criação e a atmosfera buscada.' },
+        { name: 'Maré Alta',          seg: 'Filme',    skin: 'skin-3', synopsis: 'Sinopse do projeto. Bloco curto que apresenta o conceito da obra, o processo de criação e a atmosfera buscada.' },
+        { name: 'Cidade Cinza',       seg: 'Filme',    skin: 'skin-2', synopsis: 'Sinopse do projeto. Bloco curto que apresenta o conceito da obra, o processo de criação e a atmosfera buscada.' },
+        { name: 'Retratos do Vale',   seg: 'Foto',     skin: 'skin-4', synopsis: 'Sinopse do projeto. Bloco curto que apresenta o conceito do ensaio, o olhar e a atmosfera buscada.' },
+        { name: 'Luz Natural',        seg: 'Foto',     skin: 'skin-5', synopsis: 'Sinopse do projeto. Bloco curto que apresenta o conceito do ensaio, o olhar e a atmosfera buscada.' },
+        { name: 'Silêncio Urbano',    seg: 'Foto',     skin: 'skin-6', synopsis: 'Sinopse do projeto. Bloco curto que apresenta o conceito do ensaio, o olhar e a atmosfera buscada.' },
+        { name: 'Arquitetura da Luz', seg: 'Conceito', skin: 'skin-7', synopsis: 'Sinopse do projeto. Bloco curto que apresenta o conceito da visualização arquitetônica, o processo e a atmosfera buscada.' },
+        { name: 'Espaços Vazios',     seg: 'Conceito', skin: 'skin-8', synopsis: 'Sinopse do projeto. Bloco curto que apresenta o conceito da visualização arquitetônica, o processo e a atmosfera buscada.' },
+        { name: 'Concreto e Vidro',   seg: 'Conceito', skin: 'skin-9', synopsis: 'Sinopse do projeto. Bloco curto que apresenta o conceito da visualização arquitetônica, o processo e a atmosfera buscada.' }
+      ];
+
+      var reel = { name: 'Showreel', seg: 'Director’s Cut', skin: 'skin-reel', synopsis: 'Director’s Cut — montagem dos principais trabalhos em direção e cinematografia. Espaço reservado para o vídeo do showreel.' };
+
+      /* ---------------------------------------------------------------
+         Header: estado ao rolar
+         --------------------------------------------------------------- */
+      var header = document.querySelector('.site-header');
+      function onScroll() {
+        if (window.scrollY > 24) header.classList.add('is-scrolled');
+        else header.classList.remove('is-scrolled');
+      }
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      /* ---------------------------------------------------------------
+         Menu mobile (toggle acessível)
+         --------------------------------------------------------------- */
+      var toggle = document.querySelector('.nav-toggle');
+      function setNav(open) {
+        header.classList.toggle('nav-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Fechar menu de navegação' : 'Abrir menu de navegação');
+      }
+      toggle.addEventListener('click', function () {
+        setNav(!header.classList.contains('nav-open'));
+      });
+
+      /* ---------------------------------------------------------------
+         Filtros de portfólio (botões + links do menu)
+         --------------------------------------------------------------- */
+      var filterButtons = Array.prototype.slice.call(document.querySelectorAll('.filter'));
+      var items = Array.prototype.slice.call(document.querySelectorAll('.grid__item'));
+
+      function applyFilter(category) {
+        filterButtons.forEach(function (btn) {
+          var active = btn.getAttribute('data-filter') === category;
+          btn.classList.toggle('is-active', active);
+          btn.setAttribute('aria-pressed', String(active));
+        });
+        items.forEach(function (item) {
+          var show = category === 'todos' || item.getAttribute('data-category') === category;
+          if (show) item.removeAttribute('hidden');
+          else item.setAttribute('hidden', '');
+        });
+      }
+
+      filterButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          applyFilter(btn.getAttribute('data-filter'));
+        });
+      });
+
+      /* ---------------------------------------------------------------
+         Navegação: aplica filtro + fecha menu mobile (scroll nativo)
+         --------------------------------------------------------------- */
+      document.querySelectorAll('.nav__link').forEach(function (link) {
+        link.addEventListener('click', function () {
+          var f = link.getAttribute('data-filter');
+          if (f) applyFilter(f);
+          setNav(false);
+        });
+      });
+
+      /* ---------------------------------------------------------------
+         Modal de projeto: abrir/fechar + foco preso (focus trap)
+         --------------------------------------------------------------- */
+      var modal = document.querySelector('#project-modal');
+      var modalMedia = document.querySelector('#modal-media');
+      var modalName = document.querySelector('#modal-name');
+      var modalSeg = document.querySelector('#modal-seg');
+      var modalSynopsis = document.querySelector('#modal-synopsis');
+      var modalScroll = modal.querySelector('.modal__scroll');
+      var lastFocused = null;
+
+      function openModal(data) {
+        lastFocused = document.activeElement;
+        modalName.textContent = data.name;
+        modalSeg.textContent = '— [ ' + data.seg + ' ]';
+        modalSynopsis.textContent = data.synopsis;
+        modalMedia.className = 'modal__media ' + data.skin;
+        modalMedia.alt = data.name + ' — ' + data.seg;
+
+        modal.hidden = false;
+        // força reflow para garantir a transição/exibição
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        if (modalScroll) modalScroll.scrollTop = 0;
+
+        var closeBtn = modal.querySelector('[data-close]');
+        if (closeBtn) closeBtn.focus();
+        document.addEventListener('keydown', onModalKeydown);
+      }
+
+      function closeModal() {
+        modal.classList.remove('is-open');
+        modal.hidden = true;
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', onModalKeydown);
+        if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      }
+
+      function onModalKeydown(e) {
+        if (e.key === 'Escape') { closeModal(); return; }
+        if (e.key !== 'Tab') return;
+        var focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        focusables = Array.prototype.filter.call(focusables, function (el) { return el.offsetParent !== null; });
+        if (!focusables.length) return;
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+
+      document.querySelectorAll('.card').forEach(function (card) {
+        card.addEventListener('click', function () {
+          var idx = parseInt(card.getAttribute('data-project'), 10);
+          if (projects[idx]) openModal(projects[idx]);
+        });
+      });
+
+      var reelBtn = document.querySelector('[data-reel]');
+      if (reelBtn) reelBtn.addEventListener('click', function () { openModal(reel); });
+
+      modal.querySelectorAll('[data-close]').forEach(function (el) {
+        el.addEventListener('click', closeModal);
+      });
+
+      /* ---------------------------------------------------------------
+         Revelação ao rolar (IntersectionObserver) — respeita reduced-motion
+         --------------------------------------------------------------- */
+      var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('is-visible'); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
+        reveals.forEach(function (el) { io.observe(el); });
+      }
+
+      /* ---------------------------------------------------------------
+         Fecha menu mobile ao redimensionar para desktop
+         --------------------------------------------------------------- */
+      window.addEventListener('resize', function () {
+        if (window.innerWidth >= 768) setNav(false);
+      });
+    })();
+  </script>
+</body>
+</html>
