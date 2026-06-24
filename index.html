@@ -326,7 +326,6 @@
       min-height: 56px;
       min-width: 44px;
       padding: 0 36px;
-      border: 1px solid var(--white);
       border-radius: var(--radius-pill);
       background: transparent;
       color: var(--white);
@@ -372,24 +371,20 @@
     .filter {
       min-height: 44px;
       padding: 10px 22px;
-      border: 1px solid var(--line);
       border-radius: var(--radius-pill);
       background: transparent;
       color: var(--grey);
       font-size: var(--fs-small);
       text-transform: uppercase;
-      transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+      transition: color var(--dur) var(--ease);
     }
     .filter:hover, .filter:focus-visible {
       color: var(--white);
-      border-color: var(--white);
     }
     .filter.is-active,
     .filter.is-active:hover,
     .filter.is-active:focus-visible {
       color: var(--red);
-      background: transparent;
-      border-color: var(--red);
     }
 
     .grid {
@@ -490,16 +485,14 @@
       align-items: center;
       justify-content: center;
       width: 48px; height: 48px;
-      border: 1px solid var(--line);
       border-radius: var(--radius-pill);
       background: rgba(7, 7, 7, 0.6);
       -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       color: var(--white);
-      transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease), transform var(--dur) var(--ease);
+      transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
     }
     .modal__close:hover, .modal__close:focus-visible {
-      border-color: var(--white);
       transform: rotate(90deg);
     }
     .modal__close svg { width: 18px; height: 18px; }
