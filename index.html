@@ -346,12 +346,15 @@
       z-index: -1;
       pointer-events: none;
       clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-      /* Vermelho sólido no centro, dissolvendo nas pontas até o fundo */
+      /* Foco de luz vermelha (contra-luz): núcleo luminoso que ilumina
+         o texto e se dissolve rápido nas extremidades — o vermelho quase
+         some, restando apenas o brilho focal sobre o fundo noir. */
       background: radial-gradient(ellipse at center,
-        var(--red) 0%,
-        var(--red) 56%,
-        rgba(254, 0, 0, 0.45) 76%,
-        rgba(254, 0, 0, 0) 100%);
+        rgba(255, 90, 90, 0.95) 0%,
+        rgba(254, 0, 0, 0.55) 16%,
+        rgba(254, 0, 0, 0.16) 38%,
+        rgba(254, 0, 0, 0.04) 60%,
+        rgba(254, 0, 0, 0) 82%);
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.88);
       transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
