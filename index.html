@@ -318,24 +318,52 @@
       padding: var(--pad-x);
     }
 
-    /* Botão PLAY REEL — cápsula discreta, mesma fonte/peso/tracking. */
+    /* Botão PLAY REEL — texto discreto; no hover surge um losango
+       vermelho (estilo bandeira do Brasil) com as extremidades em
+       degradê, dissolvendo-se no fundo noir. */
     .btn-reel {
+      position: relative;
+      isolation: isolate;          /* contém o losango (::before) atrás do texto */
       display: inline-flex;
       align-items: center;
       justify-content: center;
       min-height: 56px;
       min-width: 44px;
       padding: 0 36px;
-      border-radius: var(--radius-pill);
       background: transparent;
       color: var(--white);
       font-size: var(--fs-small);
       text-transform: uppercase;
-      transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+      transition: color var(--dur) var(--ease);
     }
-    .btn-reel:hover, .btn-reel:focus-visible {
-      background: var(--white);
-      color: var(--noir);
+    .btn-reel::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: clamp(220px, 130%, 400px);
+      aspect-ratio: 9 / 5;         /* losango largo, como na bandeira */
+      z-index: -1;
+      pointer-events: none;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      /* Vermelho sólido no centro, dissolvendo nas pontas até o fundo */
+      background: radial-gradient(ellipse at center,
+        var(--red) 0%,
+        var(--red) 56%,
+        rgba(254, 0, 0, 0.45) 76%,
+        rgba(254, 0, 0, 0) 100%);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.88);
+      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+    }
+    .btn-reel:hover::before,
+    .btn-reel:focus-visible::before {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .btn-reel:hover,
+    .btn-reel:focus-visible {
+      color: var(--white);
     }
 
     /* Seta de scroll para o portfólio */
