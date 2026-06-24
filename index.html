@@ -318,12 +318,15 @@
       padding: var(--pad-x);
     }
 
-    /* Botão PLAY REEL — texto discreto; no hover surge um losango
-       vermelho (estilo bandeira do Brasil) com as extremidades em
-       degradê, dissolvendo-se no fundo noir. */
+    /* Botão PLAY REEL — texto discreto; no hover surge um foco de luz
+       vermelha. Duas camadas para suavizar as bordas: o recorte em
+       losango fica no ::before (filho) e o desfoque no elemento-pai
+       (.btn-reel__glow). Como o blur é aplicado DEPOIS do recorte, ele
+       dissolve as arestas do losango no fundo — sem linha dura, sem
+       contorno no núcleo. */
     .btn-reel {
       position: relative;
-      isolation: isolate;          /* contém o losango (::before) atrás do texto */
+      isolation: isolate;          /* mantém o brilho atrás do texto */
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -336,37 +339,37 @@
       text-transform: uppercase;
       transition: color var(--dur) var(--ease);
     }
-    .btn-reel::before {
-      content: "";
+    .btn-reel__glow {
       position: absolute;
       left: 50%;
       top: 50%;
-      width: clamp(220px, 130%, 400px);
+      width: clamp(220px, 145%, 460px);
       aspect-ratio: 9 / 5;         /* losango largo, como na bandeira */
       z-index: -1;
       pointer-events: none;
-      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-      /* Foco de luz vermelha (contra-luz): núcleo luminoso que ilumina
-         o texto e se dissolve rápido nas extremidades — o vermelho quase
-         some, restando apenas o brilho focal sobre o fundo noir. */
-      background: radial-gradient(ellipse at center,
-        rgba(255, 90, 90, 0.95) 0%,
-        rgba(254, 0, 0, 0.55) 16%,
-        rgba(254, 0, 0, 0.16) 38%,
-        rgba(254, 0, 0, 0.04) 60%,
-        rgba(254, 0, 0, 0) 82%);
+      filter: blur(24px);          /* blur no PAI do recorte: penteia as arestas */
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.88);
+      transform: translate(-50%, -50%) scale(0.9);
       transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
     }
-    .btn-reel:hover::before,
-    .btn-reel:focus-visible::before {
+    .btn-reel__glow::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      /* Núcleo luminoso que ilumina o texto, com degradê natural até o
+         fundo (transparente = mesma cor do fundo nas extremidades). */
+      background: radial-gradient(ellipse at center,
+        rgba(255, 115, 115, 0.95) 0%,
+        rgba(255, 25, 25, 0.50) 26%,
+        rgba(235, 0, 0, 0.18) 50%,
+        rgba(210, 0, 0, 0.05) 74%,
+        rgba(190, 0, 0, 0) 100%);
+    }
+    .btn-reel:hover .btn-reel__glow,
+    .btn-reel:focus-visible .btn-reel__glow {
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
-    }
-    .btn-reel:hover,
-    .btn-reel:focus-visible {
-      color: var(--white);
     }
 
     /* Seta de scroll para o portfólio */
@@ -800,7 +803,10 @@
       <div class="hero__overlay" aria-hidden="true"></div>
 
       <div class="hero__content">
-        <button class="btn-reel" type="button" data-reel aria-haspopup="dialog">[ PLAY REEL ]</button>
+        <button class="btn-reel" type="button" data-reel aria-haspopup="dialog">
+          <span class="btn-reel__glow" aria-hidden="true"></span>
+          [ PLAY REEL ]
+        </button>
       </div>
 
       <a class="hero__scroll" href="#portfolio" aria-label="Rolar para o portfólio">
