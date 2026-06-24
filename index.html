@@ -68,6 +68,9 @@
       /* --- Movimento --- */
       --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
       --dur: 0.45s;
+
+      /* --- Textura --- */
+      --grain-opacity: 0.33;    /* "aspereza" do grão (~33%) */
     }
 
     /* =================================================================
@@ -700,6 +703,24 @@
     .skin-8 { background: radial-gradient(120% 100% at 50% 18%, #101a33 0%, #090d18 50%, #070707 100%); }
     .skin-9 { background: linear-gradient(150deg, #2a0d0d 0%, #15100f 50%, #070707 100%); }
     .skin-reel { background: radial-gradient(120% 120% at 50% 30%, #1a2747 0%, #0a1024 40%, #060708 100%); }
+
+    /* =================================================================
+       TEXTURA DE GRÃO (filme) — granulado monocromático fino sobre todo
+       o site, evocando uma fotografia antiga. Estático (foto, não filme),
+       grãos pequenos, mesclado por 'overlay'. Aspereza em --grain-opacity.
+       ================================================================= */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: var(--grain-opacity);
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23grain)'/%3E%3C/svg%3E");
+      background-size: 140px 140px;
+      background-repeat: repeat;
+    }
 
     /* =================================================================
        RESPONSIVO — Mobile-first → Tablet → Desktop
