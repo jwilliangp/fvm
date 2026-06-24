@@ -396,9 +396,13 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23grain)'/%3E%3C/svg%3E");
       background-size: 110px 110px;
       background-repeat: repeat;
-      /* máscara seguindo a mesma queda suave do brilho — sem borda definida */
-      -webkit-mask-image: radial-gradient(ellipse at center, #000 0%, rgba(0,0,0,0.6) 42%, rgba(0,0,0,0.18) 66%, transparent 86%);
-      mask-image: radial-gradient(ellipse at center, #000 0%, rgba(0,0,0,0.6) 42%, rgba(0,0,0,0.18) 66%, transparent 86%);
+      /* Grão confinado ao miolo aceso e dissolvido com queda longa bem
+         antes da periferia escura — onde, antes, o soft-light clareava
+         pontos sobre o escuro e desenhava a borda/retângulo. */
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 0%, rgba(0,0,0,0.55) 24%, rgba(0,0,0,0.18) 42%, rgba(0,0,0,0.04) 56%, transparent 66%);
+      mask-image: radial-gradient(ellipse at center, #000 0%, rgba(0,0,0,0.55) 24%, rgba(0,0,0,0.18) 42%, rgba(0,0,0,0.04) 56%, transparent 66%);
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
     }
     .btn-reel:hover::after,
     .btn-reel:focus-visible::after {
