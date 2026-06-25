@@ -632,44 +632,66 @@
     }
 
     /* =================================================================
-       GALERIA (página com várias fotos, aberta a partir de um card)
-       Mesma linguagem do grid principal: mídia em destaque, legenda
-       pequena e discreta sob cada foto.
+       GALERIA — tela cheia com rolagem horizontal. Cada foto ocupa a
+       altura toda; rola-se para o lado (mouse/trackpad/toque) para ver
+       todas. Título pequeno no canto inferior direito de cada foto.
        ================================================================= */
-    .gallery {
-      margin-top: clamp(32px, 5vw, 56px);
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--gap-grid);
-    }
-    .photo { min-width: 0; }
-    .photo__frame {
-      position: relative;
-      aspect-ratio: 3 / 2;
-      overflow: hidden;
-      background: var(--noir);
-    }
-    /* Vinheta sutil nas bordas (igual aos cards) */
-    .photo__frame::before {
-      content: "";
+    .modal--gallery .gallery__track {
       position: absolute;
       inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background: radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(7,7,7,0.55) 100%);
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x proximity;
     }
-    .photo__media { width: 100%; height: 100%; object-fit: cover; }
-    .photo__title {
-      margin-top: 10px;
+    .slide {
+      position: relative;
+      flex: 0 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-block: clamp(56px, 10vh, 120px);
+      padding-inline: clamp(8px, 1.2vw, 24px);
+      scroll-snap-align: center;
+    }
+    .slide__fig {
+      position: relative;
+      height: 100%;
+    }
+    .slide__media {
+      display: block;
+      height: 100%;
+      width: auto;
+      max-width: 92vw;
+      object-fit: cover;
+      background: var(--noir);
+    }
+    /* Título pequeno, canto inferior direito da foto */
+    .slide__cap {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
       font-size: var(--fs-small);
-      color: var(--grey);
+      color: var(--white);
+      text-shadow: 0 1px 16px rgba(0, 0, 0, 0.75);
     }
-    @media (min-width: 600px) {
-      .gallery { grid-template-columns: repeat(2, 1fr); }
+    /* Nome da galeria — discreto, canto superior esquerdo */
+    .modal--gallery .gallery__name {
+      position: absolute;
+      top: clamp(16px, 3vw, 32px);
+      left: clamp(20px, 6vw, 120px);
+      z-index: 3;
+      max-width: 60vw;
+      font-size: var(--fs-small);
+      color: var(--white);
+      text-shadow: 0 1px 16px rgba(0, 0, 0, 0.75);
     }
-    @media (min-width: 1000px) {
-      .gallery { grid-template-columns: repeat(3, 1fr); }
-    }
+    .modal--gallery .gallery__seg { color: var(--grey); }
 
     /* =================================================================
        INFO / SOBRE (Duas colunas 50/50, foco em tipografia)
@@ -1075,27 +1097,19 @@
     </div>
   </div>
 
-  <!-- ============================== GALERIA (página com várias fotos) ============================== -->
-  <div class="modal" id="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-name" hidden>
-    <div class="modal__scroll">
-      <button class="modal__close" type="button" data-close aria-label="Fechar galeria">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/>
-        </svg>
-      </button>
+  <!-- ============================== GALERIA (tela cheia, rolagem horizontal) ============================== -->
+  <div class="modal modal--gallery" id="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-name" hidden>
+    <button class="modal__close" type="button" data-close aria-label="Fechar galeria">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/>
+      </svg>
+    </button>
 
-      <div class="modal__body">
-        <header>
-          <h2 class="project__title" id="gallery-name">
-            <span id="gallery-name-text">Nome da Galeria</span>
-            <span class="project__seg" id="gallery-seg">— [ Foto ]</span>
-          </h2>
-          <p class="project__synopsis" id="gallery-desc"></p>
-        </header>
+    <p class="gallery__name" id="gallery-name">
+      <span id="gallery-name-text">Nome da Galeria</span><span class="gallery__seg" id="gallery-seg"> — [ Foto ]</span>
+    </p>
 
-        <ul class="gallery" id="gallery-grid"></ul>
-      </div>
-    </div>
+    <ul class="gallery__track" id="gallery-grid" tabindex="0" aria-label="Fotos da galeria (role para o lado)"></ul>
   </div>
 
   <script>
@@ -1132,12 +1146,12 @@
           seg: 'Foto',
           desc: 'As melhores fotos feitas no celular — uma glória à facilidade de capturar o instante com o aparelho que vive no bolso.',
           photos: [
-            { title: 'No sinal vermelho',  skin: 'skin-4' },
-            { title: 'Janela do ônibus',   skin: 'skin-6' },
-            { title: 'Café das seis',      skin: 'skin-2' },
-            { title: 'Sombra no corredor', skin: 'skin-5' },
-            { title: 'Reflexo na poça',    skin: 'skin-1' },
-            { title: 'Antes de dormir',    skin: 'skin-3' }
+            { title: 'No sinal vermelho',  skin: 'skin-4', ratio: '2 / 3' },
+            { title: 'Janela do ônibus',   skin: 'skin-6', ratio: '3 / 2' },
+            { title: 'Café das seis',      skin: 'skin-2', ratio: '4 / 5' },
+            { title: 'Sombra no corredor', skin: 'skin-5', ratio: '2 / 3' },
+            { title: 'Reflexo na poça',    skin: 'skin-1', ratio: '3 / 2' },
+            { title: 'Antes de dormir',    skin: 'skin-3', ratio: '1 / 1' }
           ]
         },
         'se-tudo-cinema': {
@@ -1145,12 +1159,12 @@
           seg: 'Foto',
           desc: 'Produtos, lugares e pessoas sob uma luz de cinema — propaganda do local com uma estética autoral, fora do conceito comum.',
           photos: [
-            { title: 'Balcão, contraluz', skin: 'skin-7' },
-            { title: 'O provador',        skin: 'skin-4' },
-            { title: 'Vitrine às onze',   skin: 'skin-1' },
-            { title: 'Retrato com neon',  skin: 'skin-3' },
-            { title: 'Mesa posta',        skin: 'skin-2' },
-            { title: 'Saída de cena',     skin: 'skin-5' }
+            { title: 'Balcão, contraluz', skin: 'skin-7', ratio: '16 / 9' },
+            { title: 'O provador',        skin: 'skin-4', ratio: '2 / 3' },
+            { title: 'Vitrine às onze',   skin: 'skin-1', ratio: '3 / 2' },
+            { title: 'Retrato com neon',  skin: 'skin-3', ratio: '4 / 5' },
+            { title: 'Mesa posta',        skin: 'skin-2', ratio: '16 / 9' },
+            { title: 'Saída de cena',     skin: 'skin-5', ratio: '21 / 9' }
           ]
         },
         'velocidade-brechas': {
@@ -1158,12 +1172,12 @@
           seg: 'Foto',
           desc: 'Fotografia automobilística — carros e garagens que chamam a atenção, entre a velocidade, as brechas e o disparo.',
           photos: [
-            { title: 'Box 12',          skin: 'skin-8' },
-            { title: 'Faróis na chuva', skin: 'skin-3' },
-            { title: 'Marcha reduzida', skin: 'skin-6' },
-            { title: 'Graxa e cromo',   skin: 'skin-2' },
-            { title: 'Pit stop',        skin: 'skin-9' },
-            { title: 'Última volta',    skin: 'skin-1' }
+            { title: 'Box 12',          skin: 'skin-8', ratio: '3 / 2' },
+            { title: 'Faróis na chuva', skin: 'skin-3', ratio: '16 / 9' },
+            { title: 'Marcha reduzida', skin: 'skin-6', ratio: '2 / 3' },
+            { title: 'Graxa e cromo',   skin: 'skin-2', ratio: '1 / 1' },
+            { title: 'Pit stop',        skin: 'skin-9', ratio: '3 / 2' },
+            { title: 'Última volta',    skin: 'skin-1', ratio: '16 / 9' }
           ]
         }
       };
@@ -1290,44 +1304,51 @@
         projectModal.open();
       }
 
-      /* Página de galeria (aba FOTOS) — monta a grade de fotos com títulos */
+      /* Página de galeria (aba FOTOS) — tela cheia, rolagem horizontal */
       var galleryModal = makeOverlay(document.querySelector('#gallery-modal'));
       var galleryName = document.querySelector('#gallery-name-text');
       var gallerySeg = document.querySelector('#gallery-seg');
-      var galleryDesc = document.querySelector('#gallery-desc');
       var galleryGrid = document.querySelector('#gallery-grid');
+
+      /* Roda do mouse (vertical) rola a galeria para o lado */
+      galleryGrid.addEventListener('wheel', function (e) {
+        if (galleryGrid.scrollWidth <= galleryGrid.clientWidth) return;
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+          galleryGrid.scrollLeft += e.deltaY;
+          e.preventDefault();
+        }
+      }, { passive: false });
 
       function openGallery(key) {
         var g = galleries[key];
         if (!g) return;
         galleryName.textContent = g.name;
-        gallerySeg.textContent = '— [ ' + g.seg + ' ]';
-        galleryDesc.textContent = g.desc;
+        gallerySeg.textContent = ' — [ ' + g.seg + ' ]';
         galleryGrid.innerHTML = '';
         g.photos.forEach(function (p) {
           var li = document.createElement('li');
-          li.className = 'photo';
+          li.className = 'slide';
 
-          var frame = document.createElement('div');
-          frame.className = 'photo__frame';
+          var fig = document.createElement('figure');
+          fig.className = 'slide__fig';
 
           var img = document.createElement('img');
-          img.className = 'photo__media ' + p.skin;
+          img.className = 'slide__media ' + p.skin;
           img.src = BLANK;
           img.alt = p.title + ' — ' + g.name;
           img.loading = 'lazy';
-          img.width = 1200;
-          img.height = 800;
-          frame.appendChild(img);
+          img.style.aspectRatio = p.ratio || '3 / 2';
 
-          var cap = document.createElement('p');
-          cap.className = 'photo__title';
+          var cap = document.createElement('figcaption');
+          cap.className = 'slide__cap';
           cap.textContent = p.title;
 
-          li.appendChild(frame);
-          li.appendChild(cap);
+          fig.appendChild(img);
+          fig.appendChild(cap);
+          li.appendChild(fig);
           galleryGrid.appendChild(li);
         });
+        galleryGrid.scrollLeft = 0;
         galleryModal.open();
       }
 
