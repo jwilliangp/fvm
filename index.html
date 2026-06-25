@@ -646,7 +646,7 @@
       overflow-y: hidden;
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x proximity;
+      scroll-behavior: auto;   /* a suavidade vem do lerp em JS; evita animação dupla */
     }
     .slide {
       position: relative;
@@ -657,7 +657,6 @@
       justify-content: center;
       padding-block: clamp(56px, 10vh, 120px);
       padding-inline: clamp(8px, 1.2vw, 24px);
-      scroll-snap-align: center;
     }
     .slide__fig {
       position: relative;
@@ -1310,13 +1309,40 @@
       var gallerySeg = document.querySelector('#gallery-seg');
       var galleryGrid = document.querySelector('#gallery-grid');
 
-      /* Roda do mouse (vertical) rola a galeria para o lado */
+      /* Rolagem horizontal suave: a roda do mouse alimenta um alvo e a
+         posição real persegue esse alvo quadro a quadro (lerp), criando
+         um deslize com inércia. Trackpad/toque seguem nativos. */
+      var glideTarget = null;
+      var glidePending = false;
+
+      function glideStep() {
+        glidePending = false;
+        if (glideTarget === null) return;
+        var current = galleryGrid.scrollLeft;
+        var diff = glideTarget - current;
+        if (Math.abs(diff) < 0.5) {
+          galleryGrid.scrollLeft = glideTarget;
+          glideTarget = null;
+          return;
+        }
+        galleryGrid.scrollLeft = current + diff * 0.18;
+        glideSchedule();
+      }
+
+      function glideSchedule() {
+        if (!glidePending) { glidePending = true; requestAnimationFrame(glideStep); }
+      }
+
       galleryGrid.addEventListener('wheel', function (e) {
         if (galleryGrid.scrollWidth <= galleryGrid.clientWidth) return;
-        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-          galleryGrid.scrollLeft += e.deltaY;
-          e.preventDefault();
-        }
+        if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return; // deixa o gesto horizontal nativo (trackpad)
+        e.preventDefault();
+        // normaliza unidades da roda (linhas/páginas) para pixels
+        var unit = e.deltaMode === 1 ? 24 : (e.deltaMode === 2 ? galleryGrid.clientWidth : 1);
+        var max = galleryGrid.scrollWidth - galleryGrid.clientWidth;
+        var base = (glideTarget === null) ? galleryGrid.scrollLeft : glideTarget;
+        glideTarget = Math.max(0, Math.min(base + e.deltaY * unit, max));
+        glideSchedule();
       }, { passive: false });
 
       function openGallery(key) {
@@ -1348,6 +1374,7 @@
           li.appendChild(fig);
           galleryGrid.appendChild(li);
         });
+        glideTarget = null;
         galleryGrid.scrollLeft = 0;
         galleryModal.open();
       }
