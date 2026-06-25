@@ -632,6 +632,46 @@
     }
 
     /* =================================================================
+       GALERIA (página com várias fotos, aberta a partir de um card)
+       Mesma linguagem do grid principal: mídia em destaque, legenda
+       pequena e discreta sob cada foto.
+       ================================================================= */
+    .gallery {
+      margin-top: clamp(32px, 5vw, 56px);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--gap-grid);
+    }
+    .photo { min-width: 0; }
+    .photo__frame {
+      position: relative;
+      aspect-ratio: 3 / 2;
+      overflow: hidden;
+      background: var(--noir);
+    }
+    /* Vinheta sutil nas bordas (igual aos cards) */
+    .photo__frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(7,7,7,0.55) 100%);
+    }
+    .photo__media { width: 100%; height: 100%; object-fit: cover; }
+    .photo__title {
+      margin-top: 10px;
+      font-size: var(--fs-small);
+      color: var(--grey);
+    }
+    @media (min-width: 600px) {
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1000px) {
+      .gallery { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* =================================================================
        INFO / SOBRE (Duas colunas 50/50, foco em tipografia)
        ================================================================= */
     .info { padding-block: var(--space-section); }
@@ -896,31 +936,31 @@
             </button>
           </li>
 
-          <!-- FOTOS -->
+          <!-- FOTOS — 3 galerias (cada card abre uma página com várias fotos) -->
           <li class="grid__item reveal" data-category="fotos">
-            <button class="card" type="button" data-project="3" aria-haspopup="dialog">
-              <img class="card__media skin-4" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Retratos do Vale — ensaio fotográfico, categoria Foto" loading="lazy" width="1200" height="800">
+            <button class="card" type="button" data-gallery="camera-escondida" aria-haspopup="dialog">
+              <img class="card__media skin-4" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="A Câmera Escondida — galeria de fotos" loading="lazy" width="1200" height="800">
               <span class="card__overlay" aria-hidden="true">
-                <span class="card__title">Retratos do Vale</span>
-                <span class="card__cat">[ Foto ]</span>
+                <span class="card__title">A Câmera Escondida</span>
+                <span class="card__cat">[ Galeria · Foto ]</span>
               </span>
             </button>
           </li>
           <li class="grid__item reveal" data-category="fotos">
-            <button class="card" type="button" data-project="4" aria-haspopup="dialog">
-              <img class="card__media skin-5" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Luz Natural — ensaio fotográfico, categoria Foto" loading="lazy" width="1200" height="800">
+            <button class="card" type="button" data-gallery="se-tudo-cinema" aria-haspopup="dialog">
+              <img class="card__media skin-5" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="E se tudo for cinema? — galeria de fotos" loading="lazy" width="1200" height="800">
               <span class="card__overlay" aria-hidden="true">
-                <span class="card__title">Luz Natural</span>
-                <span class="card__cat">[ Foto ]</span>
+                <span class="card__title">E se tudo for cinema?</span>
+                <span class="card__cat">[ Galeria · Foto ]</span>
               </span>
             </button>
           </li>
           <li class="grid__item reveal" data-category="fotos">
-            <button class="card" type="button" data-project="5" aria-haspopup="dialog">
-              <img class="card__media skin-6" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Silêncio Urbano — ensaio fotográfico, categoria Foto" loading="lazy" width="1200" height="800">
+            <button class="card" type="button" data-gallery="velocidade-brechas" aria-haspopup="dialog">
+              <img class="card__media skin-6" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Velocidade, brechas e disparo — galeria de fotos" loading="lazy" width="1200" height="800">
               <span class="card__overlay" aria-hidden="true">
-                <span class="card__title">Silêncio Urbano</span>
-                <span class="card__cat">[ Foto ]</span>
+                <span class="card__title">Velocidade, brechas e disparo</span>
+                <span class="card__cat">[ Galeria · Foto ]</span>
               </span>
             </button>
           </li>
@@ -1035,6 +1075,29 @@
     </div>
   </div>
 
+  <!-- ============================== GALERIA (página com várias fotos) ============================== -->
+  <div class="modal" id="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-name" hidden>
+    <div class="modal__scroll">
+      <button class="modal__close" type="button" data-close aria-label="Fechar galeria">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/>
+        </svg>
+      </button>
+
+      <div class="modal__body">
+        <header>
+          <h2 class="project__title" id="gallery-name">
+            <span id="gallery-name-text">Nome da Galeria</span>
+            <span class="project__seg" id="gallery-seg">— [ Foto ]</span>
+          </h2>
+          <p class="project__synopsis" id="gallery-desc"></p>
+        </header>
+
+        <ul class="gallery" id="gallery-grid"></ul>
+      </div>
+    </div>
+  </div>
+
   <script>
     (function () {
       'use strict';
@@ -1057,6 +1120,53 @@
       ];
 
       var reel = { name: 'Showreel', seg: 'Director’s Cut', skin: 'skin-reel', synopsis: 'Director’s Cut — montagem dos principais trabalhos em direção e cinematografia. Espaço reservado para o vídeo do showreel.' };
+
+      /* ---------------------------------------------------------------
+         Galerias (aba FOTOS) — cada card de galeria abre uma página com
+         várias fotos, cada uma com seu título. Mídia em placeholder via
+         skins; títulos temáticos para substituir por conteúdo real.
+         --------------------------------------------------------------- */
+      var galleries = {
+        'camera-escondida': {
+          name: 'A Câmera Escondida',
+          seg: 'Foto',
+          desc: 'As melhores fotos feitas no celular — uma glória à facilidade de capturar o instante com o aparelho que vive no bolso.',
+          photos: [
+            { title: 'No sinal vermelho',  skin: 'skin-4' },
+            { title: 'Janela do ônibus',   skin: 'skin-6' },
+            { title: 'Café das seis',      skin: 'skin-2' },
+            { title: 'Sombra no corredor', skin: 'skin-5' },
+            { title: 'Reflexo na poça',    skin: 'skin-1' },
+            { title: 'Antes de dormir',    skin: 'skin-3' }
+          ]
+        },
+        'se-tudo-cinema': {
+          name: 'E se tudo for cinema?',
+          seg: 'Foto',
+          desc: 'Produtos, lugares e pessoas sob uma luz de cinema — propaganda do local com uma estética autoral, fora do conceito comum.',
+          photos: [
+            { title: 'Balcão, contraluz', skin: 'skin-7' },
+            { title: 'O provador',        skin: 'skin-4' },
+            { title: 'Vitrine às onze',   skin: 'skin-1' },
+            { title: 'Retrato com neon',  skin: 'skin-3' },
+            { title: 'Mesa posta',        skin: 'skin-2' },
+            { title: 'Saída de cena',     skin: 'skin-5' }
+          ]
+        },
+        'velocidade-brechas': {
+          name: 'Velocidade, brechas e disparo',
+          seg: 'Foto',
+          desc: 'Fotografia automobilística — carros e garagens que chamam a atenção, entre a velocidade, as brechas e o disparo.',
+          photos: [
+            { title: 'Box 12',          skin: 'skin-8' },
+            { title: 'Faróis na chuva', skin: 'skin-3' },
+            { title: 'Marcha reduzida', skin: 'skin-6' },
+            { title: 'Graxa e cromo',   skin: 'skin-2' },
+            { title: 'Pit stop',        skin: 'skin-9' },
+            { title: 'Última volta',    skin: 'skin-1' }
+          ]
+        }
+      };
 
       /* ---------------------------------------------------------------
          Header: estado ao rolar
@@ -1119,68 +1229,120 @@
       });
 
       /* ---------------------------------------------------------------
-         Modal de projeto: abrir/fechar + foco preso (focus trap)
+         Overlays (modal de projeto e página de galeria): abrir/fechar,
+         trava de rolagem, ESC e foco preso (focus trap). Mesmo
+         comportamento reutilizado pelos dois.
          --------------------------------------------------------------- */
-      var modal = document.querySelector('#project-modal');
+      var BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+      function makeOverlay(modal) {
+        var lastFocused = null;
+        var scroll = modal.querySelector('.modal__scroll');
+
+        function onKeydown(e) {
+          if (e.key === 'Escape') { close(); return; }
+          if (e.key !== 'Tab') return;
+          var f = Array.prototype.filter.call(
+            modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'),
+            function (el) { return el.offsetParent !== null; });
+          if (!f.length) return;
+          var first = f[0], last = f[f.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+
+        function open() {
+          lastFocused = document.activeElement;
+          modal.hidden = false;
+          modal.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+          if (scroll) scroll.scrollTop = 0;
+          var closeBtn = modal.querySelector('[data-close]');
+          if (closeBtn) closeBtn.focus();
+          document.addEventListener('keydown', onKeydown);
+        }
+
+        function close() {
+          modal.classList.remove('is-open');
+          modal.hidden = true;
+          document.body.style.overflow = '';
+          document.removeEventListener('keydown', onKeydown);
+          if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+        }
+
+        modal.querySelectorAll('[data-close]').forEach(function (el) { el.addEventListener('click', close); });
+        return { open: open, close: close };
+      }
+
+      /* Modal de projeto (FILMES / CONCEITOS / Showreel) */
+      var projectModal = makeOverlay(document.querySelector('#project-modal'));
       var modalMedia = document.querySelector('#modal-media');
       var modalName = document.querySelector('#modal-name');
       var modalSeg = document.querySelector('#modal-seg');
       var modalSynopsis = document.querySelector('#modal-synopsis');
-      var modalScroll = modal.querySelector('.modal__scroll');
-      var lastFocused = null;
 
-      function openModal(data) {
-        lastFocused = document.activeElement;
+      function openProject(data) {
         modalName.textContent = data.name;
         modalSeg.textContent = '— [ ' + data.seg + ' ]';
         modalSynopsis.textContent = data.synopsis;
         modalMedia.className = 'modal__media ' + data.skin;
         modalMedia.alt = data.name + ' — ' + data.seg;
-
-        modal.hidden = false;
-        // força reflow para garantir a transição/exibição
-        modal.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-        if (modalScroll) modalScroll.scrollTop = 0;
-
-        var closeBtn = modal.querySelector('[data-close]');
-        if (closeBtn) closeBtn.focus();
-        document.addEventListener('keydown', onModalKeydown);
+        projectModal.open();
       }
 
-      function closeModal() {
-        modal.classList.remove('is-open');
-        modal.hidden = true;
-        document.body.style.overflow = '';
-        document.removeEventListener('keydown', onModalKeydown);
-        if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      /* Página de galeria (aba FOTOS) — monta a grade de fotos com títulos */
+      var galleryModal = makeOverlay(document.querySelector('#gallery-modal'));
+      var galleryName = document.querySelector('#gallery-name-text');
+      var gallerySeg = document.querySelector('#gallery-seg');
+      var galleryDesc = document.querySelector('#gallery-desc');
+      var galleryGrid = document.querySelector('#gallery-grid');
+
+      function openGallery(key) {
+        var g = galleries[key];
+        if (!g) return;
+        galleryName.textContent = g.name;
+        gallerySeg.textContent = '— [ ' + g.seg + ' ]';
+        galleryDesc.textContent = g.desc;
+        galleryGrid.innerHTML = '';
+        g.photos.forEach(function (p) {
+          var li = document.createElement('li');
+          li.className = 'photo';
+
+          var frame = document.createElement('div');
+          frame.className = 'photo__frame';
+
+          var img = document.createElement('img');
+          img.className = 'photo__media ' + p.skin;
+          img.src = BLANK;
+          img.alt = p.title + ' — ' + g.name;
+          img.loading = 'lazy';
+          img.width = 1200;
+          img.height = 800;
+          frame.appendChild(img);
+
+          var cap = document.createElement('p');
+          cap.className = 'photo__title';
+          cap.textContent = p.title;
+
+          li.appendChild(frame);
+          li.appendChild(cap);
+          galleryGrid.appendChild(li);
+        });
+        galleryModal.open();
       }
 
-      function onModalKeydown(e) {
-        if (e.key === 'Escape') { closeModal(); return; }
-        if (e.key !== 'Tab') return;
-        var focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-        focusables = Array.prototype.filter.call(focusables, function (el) { return el.offsetParent !== null; });
-        if (!focusables.length) return;
-        var first = focusables[0];
-        var last = focusables[focusables.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-      }
-
+      /* Clique nos cards: galeria (data-gallery) ou projeto (data-project) */
       document.querySelectorAll('.card').forEach(function (card) {
         card.addEventListener('click', function () {
+          var gal = card.getAttribute('data-gallery');
+          if (gal) { openGallery(gal); return; }
           var idx = parseInt(card.getAttribute('data-project'), 10);
-          if (projects[idx]) openModal(projects[idx]);
+          if (projects[idx]) openProject(projects[idx]);
         });
       });
 
       var reelBtn = document.querySelector('[data-reel]');
-      if (reelBtn) reelBtn.addEventListener('click', function () { openModal(reel); });
-
-      modal.querySelectorAll('[data-close]').forEach(function (el) {
-        el.addEventListener('click', closeModal);
-      });
+      if (reelBtn) reelBtn.addEventListener('click', function () { openProject(reel); });
 
       /* ---------------------------------------------------------------
          Revelação ao rolar (IntersectionObserver) — respeita reduced-motion
