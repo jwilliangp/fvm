@@ -120,9 +120,9 @@ reais. Ex.: `<img class="card__media" src="images/fotografia/<chave>/NN.jpg" ...
 ### Estado das 3 galerias de FOTOGRAFIA
 | Galeria | chave | nº fotos | shuffle | capa do card |
 |---|---|---|---|---|
-| A Câmera Escondida | `camera-escondida` | **20** | sim | `07-chuva-roxa.jpg` |
-| Velocidade, Brechas e Disparo | `velocidade-brechas` | **13** | sim | `07-m3.jpg` |
-| E se tudo for cinema? | `se-tudo-cinema` | **22** | **sim** | `03-capa.jpg` |
+| A Câmera Escondida | `camera-escondida` | **20** | não | `07-chuva-roxa.jpg` |
+| Velocidade, Brechas e Disparo | `velocidade-brechas` | **13** | não | `07-m3.jpg` |
+| E se tudo for cinema? | `se-tudo-cinema` | **22** | não | `03-capa.jpg` |
 
 ---
 
@@ -240,7 +240,10 @@ Claude-Session).
       (Penumbra já tem vídeo real em `videos/penumbra.webm`); avaliar migrar o
       PLAY REEL do hero para o player de vídeo.
 - [x] **E se tudo for cinema?** — **capa do card** = *Capa* (`03-capa.jpg`).
-      `shuffle` já está **ligado**.
+- [x] **Ordem manual + shuffle OFF:** nas 3 galerias a ordem das fotos e os
+      títulos foram definidos manualmente pelo usuário; `shuffle` foi **desligado**
+      nas três (arquivos `NN-slug.jpg` mantidos; a ordem vem do array, não do nome).
+      **Não reordenar** sem pedido.
 - [x] **Recebidas (3 lotes):** *E se tudo for cinema?* foi de 10 → **22** fotos.
       11–15: Equilíbrio, Espetáculo, FIM, Fruteira, Joia · 16–20: Lanche Portugal,
       Moby, Óculos Chilli Beans, Pimenta, Promessa · 21–22: Tá tudo ótimo, Verão na Lata.
