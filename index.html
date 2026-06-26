@@ -1250,6 +1250,8 @@
           name: 'A Câmera Escondida',
           seg: 'Foto',
           desc: 'As melhores fotos feitas no celular — uma glória à facilidade de capturar o instante com o aparelho que vive no bolso.',
+          shuffle: true,
+          cover: 'Chuva Roxa',
           photos: [
             { title: 'A explosão do tempo',     src: 'images/fotografia/camera-escondida/01-entardecer.jpg', w: 1500, h: 1500 },
             { title: 'A pausa',                 src: 'images/fotografia/camera-escondida/02-bicicleta.jpg',  w: 1125, h: 2000 },
@@ -1486,13 +1488,35 @@
         glideSchedule();
       }, { passive: false });
 
+      /* Embaralha um array no lugar (Fisher–Yates) */
+      function shuffle(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+        }
+        return arr;
+      }
+
       function openGallery(key) {
         var g = galleries[key];
         if (!g) return;
         galleryName.textContent = g.name;
         gallerySeg.textContent = ' — [ ' + g.seg + ' ]';
         galleryGrid.innerHTML = '';
-        g.photos.forEach(function (p) {
+
+        // ordem das fotos: embaralha (se configurado) e fixa a "capa" no início
+        var photos = g.photos.slice();
+        if (g.shuffle) shuffle(photos);
+        if (g.cover) {
+          for (var ci = 0; ci < photos.length; ci++) {
+            if (photos[ci].title === g.cover) {
+              if (ci > 0) photos.unshift(photos.splice(ci, 1)[0]);
+              break;
+            }
+          }
+        }
+
+        photos.forEach(function (p) {
           var li = document.createElement('li');
           li.className = 'slide';
 
