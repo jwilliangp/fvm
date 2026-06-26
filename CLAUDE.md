@@ -129,7 +129,8 @@ reais. Ex.: `<img class="card__media" src="images/fotografia/<chave>/NN.jpg" ...
 ## 4. AUDIOVISUAL — modal de vídeo (Penumbra com vídeo real; faltam 2)
 
 Os 3 cards (`data-film`: `penumbra`, `mare-alta`, `cidade-cinza`) abrem
-`#film-modal`: **vídeo em tela cheia + botão de play**; rolando para baixo
+`#film-modal`: **vídeo centralizado (~75% da tela, proporção original, sem
+recorte) + botão de play**; rolando para baixo
 aparece o **briefing** (título, texto, ficha técnica). Dados no objeto `films`.
 Para colocar vídeo real, preencher `src` (e `poster` opcional) no objeto. Os
 vídeos ficam em **`videos/<chave>.webm`**. **Penumbra já tem vídeo real**
