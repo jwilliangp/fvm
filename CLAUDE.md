@@ -84,7 +84,9 @@ Cada card de FOTOGRAFIA abre uma **galeria em tela cheia, rolagem horizontal**.
 Cada foto ocupa a altura toda; título pequeno no canto inferior direito com
 **fundo preto 33%** (`background: rgba(0,0,0,0.33)`). Rolagem com **inércia
 (lerp em `requestAnimationFrame`)** — não usar `scroll-snap` (foi removido por
-travar). A roda do mouse é convertida em rolagem horizontal.
+travar). A roda do mouse é convertida em rolagem horizontal; no desktop também
+dá para **clicar e arrastar** para o lado (Pointer Events, `setPointerCapture`,
+com inércia ao soltar via o mesmo lerp). No **toque** segue o scroll nativo.
 
 > **No celular (`@media max-width: 767.98px`):** a "altura cheia" daria recorte
 > (o `object-fit: cover` + `max-width` forçava as fotos a ≈9:16). Então no mobile

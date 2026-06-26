@@ -647,7 +647,12 @@
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
       scroll-behavior: auto;   /* a suavidade vem do lerp em JS; evita animação dupla */
+      cursor: grab;            /* sinaliza que dá para clicar e arrastar */
+      user-select: none;
+      -webkit-user-select: none;
     }
+    .modal--gallery .gallery__track.is-dragging { cursor: grabbing; }
+    .modal--gallery .slide__media { -webkit-user-drag: none; }
     .slide {
       position: relative;
       flex: 0 0 auto;
@@ -1535,6 +1540,51 @@
         glideTarget = Math.max(0, Math.min(base + e.deltaY * unit, max));
         glideSchedule();
       }, { passive: false });
+
+      /* Clicar e arrastar para o lado (mouse/caneta): arrasta a galeria na
+         horizontal e, ao soltar, projeta a velocidade num deslize (reaproveita
+         o lerp). No toque, mantém-se o scroll nativo. */
+      var drag = { active: false, startX: 0, startScroll: 0, lastX: 0, lastT: 0, vx: 0 };
+
+      galleryGrid.addEventListener('pointerdown', function (e) {
+        if (e.pointerType === 'touch') return;                 // toque: scroll nativo
+        if (galleryGrid.scrollWidth <= galleryGrid.clientWidth) return;
+        drag.active = true;
+        drag.startX = e.clientX;
+        drag.startScroll = galleryGrid.scrollLeft;
+        drag.lastX = e.clientX;
+        drag.lastT = e.timeStamp;
+        drag.vx = 0;
+        glideTarget = null;                                    // cancela deslize em curso
+        galleryGrid.classList.add('is-dragging');
+        try { galleryGrid.setPointerCapture(e.pointerId); } catch (err) {}
+      });
+
+      galleryGrid.addEventListener('pointermove', function (e) {
+        if (!drag.active) return;
+        e.preventDefault();
+        galleryGrid.scrollLeft = drag.startScroll - (e.clientX - drag.startX);
+        var dt = e.timeStamp - drag.lastT;
+        if (dt > 0) drag.vx = (e.clientX - drag.lastX) / dt;   // px/ms
+        drag.lastX = e.clientX;
+        drag.lastT = e.timeStamp;
+      });
+
+      function endDrag(e) {
+        if (!drag.active) return;
+        drag.active = false;
+        galleryGrid.classList.remove('is-dragging');
+        try { galleryGrid.releasePointerCapture(e.pointerId); } catch (err) {}
+        var max = galleryGrid.scrollWidth - galleryGrid.clientWidth;
+        var push = drag.vx * -180;                             // inércia ao soltar
+        if (Math.abs(push) > 6) {
+          glideTarget = Math.max(0, Math.min(galleryGrid.scrollLeft + push, max));
+          glideSchedule();
+        }
+      }
+      galleryGrid.addEventListener('pointerup', endDrag);
+      galleryGrid.addEventListener('pointercancel', endDrag);
+      galleryGrid.addEventListener('dragstart', function (e) { e.preventDefault(); });
 
       /* Embaralha um array no lugar (Fisher–Yates) */
       function shuffle(arr) {
