@@ -126,15 +126,19 @@ reais. Ex.: `<img class="card__media" src="images/fotografia/<chave>/NN.jpg" ...
 
 ---
 
-## 4. AUDIOVISUAL — modal de vídeo (estrutura pronta, mídia pendente)
+## 4. AUDIOVISUAL — modal de vídeo (Penumbra com vídeo real; faltam 2)
 
 Os 3 cards (`data-film`: `penumbra`, `mare-alta`, `cidade-cinza`) abrem
 `#film-modal`: **vídeo em tela cheia + botão de play**; rolando para baixo
 aparece o **briefing** (título, texto, ficha técnica). Dados no objeto `films`.
-Para colocar vídeo real, preencher `src` (e `poster` opcional) no objeto:
+Para colocar vídeo real, preencher `src` (e `poster` opcional) no objeto. Os
+vídeos ficam em **`videos/<chave>.webm`**. **Penumbra já tem vídeo real**
+(card/modal renomeados; a chave interna segue `penumbra`):
 ```js
-'penumbra': { name:'Penumbra', seg:'Filme', skin:'skin-1', src:'', poster:'', brief:'...' }
+'penumbra': { name:'Vídeo de Apresentação Promocional - Tabacaria CREMELECA 2023.',
+              seg:'Filme', skin:'skin-1', src:'videos/penumbra.webm', poster:'', brief:'...' }
 ```
+Faltam `mare-alta` e `cidade-cinza` (ainda com `src:''`).
 Enquanto `src` está vazio, o palco mostra o gradiente da `skin`. O `PLAY REEL`
 do hero ainda usa o modal de **projeto** (poderia migrar para o player de vídeo).
 
@@ -231,8 +235,9 @@ Claude-Session).
 ## 10. Pendências / TODO
 
 - [ ] **CONCEITOS** — montar a aba (por último). Definir estrutura/modal com o usuário.
-- [ ] **AUDIOVISUAL** — inserir os vídeos reais (`src`/`poster` no objeto `films`);
-      avaliar migrar o PLAY REEL do hero para o player de vídeo.
+- [ ] **AUDIOVISUAL** — faltam os vídeos de `mare-alta` e `cidade-cinza`
+      (Penumbra já tem vídeo real em `videos/penumbra.webm`); avaliar migrar o
+      PLAY REEL do hero para o player de vídeo.
 - [x] **E se tudo for cinema?** — **capa do card** = *Capa* (`03-capa.jpg`).
       `shuffle` já está **ligado**.
 - [x] **Recebidas (3 lotes):** *E se tudo for cinema?* foi de 10 → **22** fotos.
