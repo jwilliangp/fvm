@@ -1016,7 +1016,7 @@
           <!-- FOTOS — 3 galerias (cada card abre uma página com várias fotos) -->
           <li class="grid__item reveal" data-category="fotos">
             <button class="card" type="button" data-gallery="camera-escondida" aria-haspopup="dialog">
-              <img class="card__media skin-4" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="A Câmera Escondida — galeria de fotos" loading="lazy" width="1200" height="800">
+              <img class="card__media" src="images/fotografia/camera-escondida/07-chuva-roxa.jpg" alt="A Câmera Escondida — galeria de fotos (capa: Chuva Roxa)" loading="lazy" width="1500" height="2000">
               <span class="card__overlay" aria-hidden="true">
                 <span class="card__title">A Câmera Escondida</span>
                 <span class="card__cat">[ Galeria · Foto ]</span>
@@ -1251,7 +1251,6 @@
           seg: 'Foto',
           desc: 'As melhores fotos feitas no celular — uma glória à facilidade de capturar o instante com o aparelho que vive no bolso.',
           shuffle: true,
-          cover: 'Chuva Roxa',
           photos: [
             { title: 'A explosão do tempo',     src: 'images/fotografia/camera-escondida/01-entardecer.jpg', w: 1500, h: 1500 },
             { title: 'A pausa',                 src: 'images/fotografia/camera-escondida/02-bicicleta.jpg',  w: 1125, h: 2000 },
@@ -1504,17 +1503,9 @@
         gallerySeg.textContent = ' — [ ' + g.seg + ' ]';
         galleryGrid.innerHTML = '';
 
-        // ordem das fotos: embaralha (se configurado) e fixa a "capa" no início
+        // ordem das fotos: embaralha (se configurado)
         var photos = g.photos.slice();
         if (g.shuffle) shuffle(photos);
-        if (g.cover) {
-          for (var ci = 0; ci < photos.length; ci++) {
-            if (photos[ci].title === g.cover) {
-              if (ci > 0) photos.unshift(photos.splice(ci, 1)[0]);
-              break;
-            }
-          }
-        }
 
         photos.forEach(function (p) {
           var li = document.createElement('li');
