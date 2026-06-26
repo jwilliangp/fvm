@@ -1471,6 +1471,11 @@
         }
 
         function close() {
+          // volta o conteúdo ao início ANTES de ocultar — senão o navegador
+          // preserva a rolagem do contêiner ao reabrir
+          if (scroll) scroll.scrollTop = 0;
+          var track = modal.querySelector('.gallery__track');
+          if (track) track.scrollLeft = 0;
           modal.classList.remove('is-open');
           modal.hidden = true;
           document.body.style.overflow = '';
@@ -1500,7 +1505,9 @@
       }
 
       /* Página de galeria (aba FOTOS) — tela cheia, rolagem horizontal */
-      var galleryModal = makeOverlay(document.querySelector('#gallery-modal'));
+      var galleryModal = makeOverlay(document.querySelector('#gallery-modal'), function () {
+        glideTarget = null;   // interrompe qualquer deslize em curso ao fechar
+      });
       var galleryName = document.querySelector('#gallery-name-text');
       var gallerySeg = document.querySelector('#gallery-seg');
       var galleryGrid = document.querySelector('#gallery-grid');
@@ -1635,8 +1642,8 @@
           galleryGrid.appendChild(li);
         });
         glideTarget = null;
-        galleryGrid.scrollLeft = 0;
         galleryModal.open();
+        galleryGrid.scrollLeft = 0;   // após abrir (visível) → reinício efetivo
       }
 
       /* Modal de filme (aba FILMES) — vídeo em tela cheia + briefing */

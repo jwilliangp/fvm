@@ -74,7 +74,11 @@ O **texto exibido** foi renomeado, mas as **chaves internas continuam as antigas
 Cada card tem um dataset que define o destino:
 `data-film` → `openFilm()` · `data-gallery` → `openGallery()` · `data-project` →
 `openProject()`. O helper `makeOverlay(modalEl, onClose?)` cuida de
-abrir/fechar/ESC/foco-preso para os três.
+abrir/fechar/ESC/foco-preso para os três. **Ao fechar**, ele zera a rolagem
+(`.modal__scroll` vertical e `.gallery__track` horizontal) **antes de ocultar** —
+assim todo modal reabre **desde o início** (o navegador preservava a posição se
+o reset fosse feito com o elemento já oculto). A galeria também zera `glideTarget`
+ao fechar e o `scrollLeft` logo após abrir.
 
 ---
 
