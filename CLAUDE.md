@@ -86,6 +86,12 @@ Cada foto ocupa a altura toda; título pequeno no canto inferior direito com
 (lerp em `requestAnimationFrame`)** — não usar `scroll-snap` (foi removido por
 travar). A roda do mouse é convertida em rolagem horizontal.
 
+> **No celular (`@media max-width: 767.98px`):** a "altura cheia" daria recorte
+> (o `object-fit: cover` + `max-width` forçava as fotos a ≈9:16). Então no mobile
+> cada foto aparece **inteira, na proporção original** — `.slide` ocupa `100vw`
+> (uma por tela) e `.slide__media` usa `width/height: auto` + `max-width/max-height:
+> 100%` + `object-fit: contain`. **No desktop continua altura cheia** (não mexer).
+
 ### Dados: objeto `galleries` (no `<script>`)
 ```js
 'chave-da-galeria': {
