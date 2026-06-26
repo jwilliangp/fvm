@@ -114,7 +114,7 @@ reais. Ex.: `<img class="card__media" src="images/fotografia/<chave>/NN.jpg" ...
 |---|---|---|---|---|
 | A Câmera Escondida | `camera-escondida` | **20** | sim | `07-chuva-roxa.jpg` |
 | Velocidade, Brechas e Disparo | `velocidade-brechas` | **13** | sim | `07-m3.jpg` |
-| E se tudo for cinema? | `se-tudo-cinema` | **10** | **não** | gradiente (skin-5) — sem capa real ainda |
+| E se tudo for cinema? | `se-tudo-cinema` | **15** | **não** | gradiente (skin-5) — sem capa real ainda |
 
 ---
 
@@ -227,8 +227,7 @@ Claude-Session).
       avaliar migrar o PLAY REEL do hero para o player de vídeo.
 - [ ] **E se tudo for cinema?** — definir **capa do card** (sugestões: *Bailarina*
       ou *Casa do Flávio de Carvalho*) e decidir se liga `shuffle`.
-- [ ] **Fotos não recebidas:** o usuário tentou enviar **"Equilíbrio"** e
-      **"Espetáculo"** (para *E se tudo for cinema?*), mas **não chegaram** (erro
-      de 32 MB). Repedir esses 2 quando retomar.
+- [x] **Recebidas:** *Equilíbrio*, *Espetáculo*, *FIM*, *Fruteira* e *Joia*
+      adicionadas a *E se tudo for cinema?* (fotos 11–15 → galeria com 15).
 - [ ] Possível: usar fotos reais como capa de mais cards; revisar legendas
       antigas ("[ Foto ]", "[ Filme ]") se o usuário quiser alinhar ao novo vocabulário.
