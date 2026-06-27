@@ -80,6 +80,13 @@ assim todo modal reabre **desde o início** (o navegador preservava a posição 
 o reset fosse feito com o elemento já oculto). A galeria também zera `glideTarget`
 ao fechar e o `scrollLeft` logo após abrir.
 
+**Título sobreposto (mobile):** no celular, o título de cada modal aparece
+**sobre a mídia** e é revelado **ao toque** (`wireTitleReveal` adiciona a classe
+`is-titled` ao tocar/arrastar; aparece ao abrir via `.flash()` e some ~1,8 s
+depois). Filme/projeto ganham um `<p class="modal__overtitle">` (preenchido nos
+`open*`); a galeria reaproveita o `.gallery__name`. **No desktop nada muda**
+(`.modal__overtitle` fica `display:none`; o nome da galeria segue sempre visível).
+
 ---
 
 ## 3. FOTOGRAFIA — galerias (estado atual ✅)

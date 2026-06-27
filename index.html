@@ -548,6 +548,23 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    /* Título do modal sobreposto à mídia. No desktop fica oculto (o título
+       aparece no corpo); no celular é revelado ao toque (ver media query). */
+    .modal__overtitle {
+      position: absolute;
+      top: clamp(16px, 3vw, 32px);
+      left: clamp(20px, 6vw, 120px);
+      right: clamp(56px, 14vw, 100px);
+      z-index: 5;
+      margin: 0;
+      font-size: var(--fs-body);
+      line-height: 1.2;
+      color: var(--white);
+      text-shadow: 0 1px 18px rgba(0, 0, 0, 0.9), 0 0 2px rgba(0, 0, 0, 0.7);
+      pointer-events: none;
+      display: none;
+    }
+
     .modal__close {
       position: fixed;
       top: clamp(16px, 3vw, 32px);
@@ -934,6 +951,14 @@
         max-height: 100%;
         object-fit: contain;
       }
+
+      /* Título do modal mais visível no celular: revelado ao tocar/arrastar
+         (aparece ao abrir e some sozinho). Vale para filme, projeto e o nome
+         da galeria. */
+      .modal__overtitle { display: block; opacity: 0; transition: opacity 0.3s var(--ease); }
+      .modal.is-titled .modal__overtitle { opacity: 1; }
+      .modal--gallery .gallery__name { opacity: 0; transition: opacity 0.3s var(--ease); }
+      .modal--gallery.is-titled .gallery__name { opacity: 1; }
     }
 
     /* =================================================================
@@ -1143,6 +1168,7 @@
 
   <!-- ============================== MODAL (Projeto individual) ============================== -->
   <div class="modal" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <p class="modal__overtitle" id="project-overtitle" aria-hidden="true"></p>
     <div class="modal__scroll">
       <button class="modal__close" type="button" data-close aria-label="Fechar projeto">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1201,6 +1227,7 @@
 
   <!-- ============================== MODAL DE FILME (vídeo + briefing) ============================== -->
   <div class="modal modal--film" id="film-modal" role="dialog" aria-modal="true" aria-labelledby="film-title" hidden>
+    <p class="modal__overtitle" id="film-overtitle" aria-hidden="true"></p>
     <div class="modal__scroll">
       <button class="modal__close" type="button" data-close aria-label="Fechar filme">
         <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -1488,6 +1515,24 @@
         return { open: open, close: close };
       }
 
+      /* Título sobreposto revelado ao toque (celular): aparece ao abrir e some
+         pouco depois; reaparece a cada toque/arrasto. No desktop é inócuo. */
+      function wireTitleReveal(modal) {
+        var t;
+        function show() { modal.classList.add('is-titled'); clearTimeout(t); }
+        function hide() { clearTimeout(t); t = setTimeout(function () { modal.classList.remove('is-titled'); }, 1800); }
+        modal.addEventListener('touchstart', show, { passive: true });
+        modal.addEventListener('touchmove', show, { passive: true });
+        modal.addEventListener('touchend', hide, { passive: true });
+        modal.addEventListener('touchcancel', hide, { passive: true });
+        return { flash: function () { show(); hide(); } };
+      }
+      var filmReveal = wireTitleReveal(document.querySelector('#film-modal'));
+      var projectReveal = wireTitleReveal(document.querySelector('#project-modal'));
+      var galleryReveal = wireTitleReveal(document.querySelector('#gallery-modal'));
+      var filmOvertitle = document.querySelector('#film-overtitle');
+      var projectOvertitle = document.querySelector('#project-overtitle');
+
       /* Modal de projeto (FILMES / CONCEITOS / Showreel) */
       var projectModal = makeOverlay(document.querySelector('#project-modal'));
       var modalMedia = document.querySelector('#modal-media');
@@ -1501,7 +1546,9 @@
         modalSynopsis.textContent = data.synopsis;
         modalMedia.className = 'modal__media ' + data.skin;
         modalMedia.alt = data.name + ' — ' + data.seg;
+        projectOvertitle.textContent = data.name;
         projectModal.open();
+        projectReveal.flash();
       }
 
       /* Página de galeria (aba FOTOS) — tela cheia, rolagem horizontal */
@@ -1644,6 +1691,7 @@
         glideTarget = null;
         galleryModal.open();
         galleryGrid.scrollLeft = 0;   // após abrir (visível) → reinício efetivo
+        galleryReveal.flash();
       }
 
       /* Modal de filme (aba FILMES) — vídeo em tela cheia + briefing */
@@ -1687,7 +1735,9 @@
           filmVideo.removeAttribute('poster');
           if (filmVideo.load) filmVideo.load();
         }
+        filmOvertitle.textContent = f.name;
         filmModal.open();
+        filmReveal.flash();
       }
 
       /* Clique nos cards: filme (data-film), galeria (data-gallery) ou projeto (data-project) */
