@@ -160,8 +160,10 @@ subir um pouco o copo no recorte 3:2 (não mexe no pôster, que é `contain`). E
 ```
 `cidade-cinza` ("Live Performance - SoulRock3") e `mare-alta` ("Reel
 Publicitário - Tábuas", vídeo **vertical 9:16**) também têm vídeo real. Os
-**3 cards já têm vídeo** (`videos/<chave>.webm`); o player (`max 75vw/75vh +
-contain`) respeita qualquer proporção.
+**3 cards já têm vídeo** (`videos/<chave>.webm`); o player (`.film__video`,
+`contain`) usa **`max-width: 75vw`** (horizontais ficam a 75% da largura) e
+**`max-height: 90vh`** (o vertical 9:16 enche a altura p/ não ficar menor que
+os 16:9 — 9:16 e 16:9 não dão pra igualar a 75%). Vale também para os pôsteres.
 Enquanto `src` está vazio, o palco mostra o gradiente da `skin`. O `PLAY REEL`
 do hero ainda usa o modal de **projeto** (poderia migrar para o player de vídeo).
 
