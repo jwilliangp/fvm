@@ -150,8 +150,9 @@ Para colocar vídeo real, preencher `src` e `poster` no objeto. Os vídeos ficam
 em **`videos/<chave>.webm`** e o **`poster` = a capa do card**
 (`images/audiovisual/<chave>.jpg`) — é a imagem que o `<video>` mostra **antes
 do play** (`openFilm` dá `load()` para o pôster voltar mesmo ao reabrir).
-Exceção: `mare-alta` usa um pôster próprio recortado a 9:16 com o copo mais
-alto (`mare-alta-poster.jpg`); a capa do card segue a `mare-alta.jpg` cheia. Ex.:
+O pôster do `mare-alta` é a `mare-alta.jpg` cheia (igual à capa do card). A
+**capa do card** do `mare-alta` usa `style="object-position: 50% 58%"` para
+subir um pouco o copo no recorte 3:2 (não mexe no pôster, que é `contain`). Ex.:
 ```js
 'penumbra': { name:'Vídeo de Apresentação Promocional - Tabacaria CREMELECA 2023.',
               seg:'Filme', skin:'skin-1', src:'videos/penumbra.webm',
