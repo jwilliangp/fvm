@@ -146,12 +146,14 @@ real** no grid (`images/audiovisual/<chave>.jpg`) e abrem
 `#film-modal`: **vídeo centralizado (~75% da tela, proporção original, sem
 recorte) + botão de play**; rolando para baixo
 aparece o **briefing** (título, texto, ficha técnica). Dados no objeto `films`.
-Para colocar vídeo real, preencher `src` (e `poster` opcional) no objeto. Os
-vídeos ficam em **`videos/<chave>.webm`**. **Penumbra já tem vídeo real**
-(card/modal renomeados; a chave interna segue `penumbra`):
+Para colocar vídeo real, preencher `src` e `poster` no objeto. Os vídeos ficam
+em **`videos/<chave>.webm`** e o **`poster` = a capa do card**
+(`images/audiovisual/<chave>.jpg`) — é a imagem que o `<video>` mostra **antes
+do play** (`openFilm` dá `load()` para o pôster voltar mesmo ao reabrir). Ex.:
 ```js
 'penumbra': { name:'Vídeo de Apresentação Promocional - Tabacaria CREMELECA 2023.',
-              seg:'Filme', skin:'skin-1', src:'videos/penumbra.webm', poster:'', brief:'...' }
+              seg:'Filme', skin:'skin-1', src:'videos/penumbra.webm',
+              poster:'images/audiovisual/penumbra.jpg', brief:'...' }
 ```
 `cidade-cinza` ("Live Performance - SoulRock3") e `mare-alta` ("Reel
 Publicitário - Tábuas", vídeo **vertical 9:16**) também têm vídeo real. Os

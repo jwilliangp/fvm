@@ -1390,15 +1390,15 @@
          --------------------------------------------------------------- */
       var films = {
         'penumbra': {
-          name: 'Vídeo de Apresentação Promocional - Tabacaria CREMELECA 2023.', seg: 'Filme', skin: 'skin-1', src: 'videos/penumbra.webm', poster: '',
+          name: 'Vídeo de Apresentação Promocional - Tabacaria CREMELECA 2023.', seg: 'Filme', skin: 'skin-1', src: 'videos/penumbra.webm', poster: 'images/audiovisual/penumbra.jpg',
           brief: 'Briefing do filme — bloco que apresenta o conceito da obra, a abordagem de direção e cinematografia, a intenção e o resultado. Espaço reservado para o texto completo do projeto.'
         },
         'mare-alta': {
-          name: 'Reel Publicitário - Tábuas', seg: 'Filme', skin: 'skin-3', src: 'videos/mare-alta.webm', poster: '',
+          name: 'Reel Publicitário - Tábuas', seg: 'Filme', skin: 'skin-3', src: 'videos/mare-alta.webm', poster: 'images/audiovisual/mare-alta.jpg',
           brief: 'Briefing do filme — bloco que apresenta o conceito da obra, a abordagem de direção e cinematografia, a intenção e o resultado. Espaço reservado para o texto completo do projeto.'
         },
         'cidade-cinza': {
-          name: 'Live Performance - SoulRock3', seg: 'Filme', skin: 'skin-2', src: 'videos/cidade-cinza.webm', poster: '',
+          name: 'Live Performance - SoulRock3', seg: 'Filme', skin: 'skin-2', src: 'videos/cidade-cinza.webm', poster: 'images/audiovisual/cidade-cinza.jpg',
           brief: 'Briefing do filme — bloco que apresenta o conceito da obra, a abordagem de direção e cinematografia, a intenção e o resultado. Espaço reservado para o texto completo do projeto.'
         }
       };
@@ -1730,6 +1730,7 @@
         if (f.src) {
           filmVideo.src = f.src;
           if (f.poster) filmVideo.poster = f.poster;
+          if (filmVideo.load) filmVideo.load();   // volta ao pôster mesmo ao reabrir após tocar
         } else {
           filmVideo.removeAttribute('src');
           filmVideo.removeAttribute('poster');
