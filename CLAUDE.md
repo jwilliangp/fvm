@@ -141,7 +141,8 @@ reais. Ex.: `<img class="card__media" src="images/fotografia/<chave>/NN.jpg" ...
 
 ## 4. AUDIOVISUAL — modal de vídeo (os 3 cards com vídeo real ✅)
 
-Os 3 cards (`data-film`: `penumbra`, `mare-alta`, `cidade-cinza`) abrem
+Os 3 cards (`data-film`: `penumbra`, `mare-alta`, `cidade-cinza`) têm **capa
+real** no grid (`images/audiovisual/<chave>.jpg`) e abrem
 `#film-modal`: **vídeo centralizado (~75% da tela, proporção original, sem
 recorte) + botão de play**; rolando para baixo
 aparece o **briefing** (título, texto, ficha técnica). Dados no objeto `films`.
