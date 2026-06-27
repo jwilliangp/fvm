@@ -137,7 +137,7 @@ reais. Ex.: `<img class="card__media" src="images/fotografia/<chave>/NN.jpg" ...
 
 ---
 
-## 4. AUDIOVISUAL — modal de vídeo (Penumbra e Cidade Cinza com vídeo; falta 1)
+## 4. AUDIOVISUAL — modal de vídeo (os 3 cards com vídeo real ✅)
 
 Os 3 cards (`data-film`: `penumbra`, `mare-alta`, `cidade-cinza`) abrem
 `#film-modal`: **vídeo centralizado (~75% da tela, proporção original, sem
@@ -150,8 +150,10 @@ vídeos ficam em **`videos/<chave>.webm`**. **Penumbra já tem vídeo real**
 'penumbra': { name:'Vídeo de Apresentação Promocional - Tabacaria CREMELECA 2023.',
               seg:'Filme', skin:'skin-1', src:'videos/penumbra.webm', poster:'', brief:'...' }
 ```
-`cidade-cinza` também tem vídeo real (`videos/cidade-cinza.webm`, renomeado
-"Live Performance - SoulRock3"). Falta só `mare-alta` (ainda com `src:''`).
+`cidade-cinza` ("Live Performance - SoulRock3") e `mare-alta` ("Reel
+Publicitário - Tábuas", vídeo **vertical 9:16**) também têm vídeo real. Os
+**3 cards já têm vídeo** (`videos/<chave>.webm`); o player (`max 75vw/75vh +
+contain`) respeita qualquer proporção.
 Enquanto `src` está vazio, o palco mostra o gradiente da `skin`. O `PLAY REEL`
 do hero ainda usa o modal de **projeto** (poderia migrar para o player de vídeo).
 
@@ -248,9 +250,9 @@ Claude-Session).
 ## 10. Pendências / TODO
 
 - [ ] **CONCEITOS** — montar a aba (por último). Definir estrutura/modal com o usuário.
-- [ ] **AUDIOVISUAL** — falta o vídeo de `mare-alta` (Penumbra e Cidade Cinza
-      já têm vídeo real em `videos/`); avaliar migrar o PLAY REEL do hero para
-      o player de vídeo.
+- [x] **AUDIOVISUAL** — os 3 cards têm vídeo real (`videos/<chave>.webm`).
+- [ ] Avaliar migrar o **PLAY REEL** do hero para o player de vídeo (hoje usa
+      o modal de projeto).
 - [x] **E se tudo for cinema?** — **capa do card** = *Capa* (`03-capa.jpg`).
 - [x] **Ordem manual + shuffle OFF:** nas 3 galerias a ordem das fotos e os
       títulos foram definidos manualmente pelo usuário; `shuffle` foi **desligado**
