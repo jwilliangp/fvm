@@ -149,7 +149,9 @@ aparece o **briefing** (título, texto, ficha técnica). Dados no objeto `films`
 Para colocar vídeo real, preencher `src` e `poster` no objeto. Os vídeos ficam
 em **`videos/<chave>.webm`** e o **`poster` = a capa do card**
 (`images/audiovisual/<chave>.jpg`) — é a imagem que o `<video>` mostra **antes
-do play** (`openFilm` dá `load()` para o pôster voltar mesmo ao reabrir). Ex.:
+do play** (`openFilm` dá `load()` para o pôster voltar mesmo ao reabrir).
+Exceção: `mare-alta` usa um pôster próprio recortado a 9:16 com o copo mais
+alto (`mare-alta-poster.jpg`); a capa do card segue a `mare-alta.jpg` cheia. Ex.:
 ```js
 'penumbra': { name:'Vídeo de Apresentação Promocional - Tabacaria CREMELECA 2023.',
               seg:'Filme', skin:'skin-1', src:'videos/penumbra.webm',
