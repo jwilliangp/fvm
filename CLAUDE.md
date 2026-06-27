@@ -35,7 +35,8 @@ Princípio central: **a mídia domina; o texto é discreto.**
 - **Dark mode, alto contraste:** fundo `--noir: #070707`, texto `--white`,
   secundário `--grey: #8a8a8a`, linhas `--line: #333`.
 - **Accent único:** `--red: #FE0000`, usado com parcimônia (estado ativo de
-  filtro, hover, seleção, e o brilho do PLAY REEL).
+  filtro, hover, seleção, o brilho do PLAY REEL e o **texto das legendas das
+  fotos** nas galerias — `.slide__cap`).
 - **Border-radius binário:** `0` para mídia/blocos, `999px` (pill) para botões.
 - **Botões sem borda** (decisão do usuário). Foco visível por `outline` global.
 - **Grão de filme:** existe um grão atmosférico sutil no hero (original) e um
@@ -92,8 +93,9 @@ depois). Filme/projeto ganham um `<p class="modal__overtitle">` (preenchido nos
 ## 3. FOTOGRAFIA — galerias (estado atual ✅)
 
 Cada card de FOTOGRAFIA abre uma **galeria em tela cheia, rolagem horizontal**.
-Cada foto ocupa a altura toda; título pequeno no canto inferior direito com
-**fundo preto 33%** (`background: rgba(0,0,0,0.33)`). Rolagem com **inércia
+Cada foto ocupa a altura toda; título pequeno no canto inferior direito, **em
+vermelho (`--red`)**, com **fundo preto 33%** (`background: rgba(0,0,0,0.33)`)
+para leitura. Rolagem com **inércia
 (lerp em `requestAnimationFrame`)** — não usar `scroll-snap` (foi removido por
 travar). A roda do mouse é convertida em rolagem horizontal; no desktop também
 dá para **clicar e arrastar** para o lado (Pointer Events, `setPointerCapture`,
